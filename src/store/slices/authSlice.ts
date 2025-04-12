@@ -56,11 +56,6 @@ export const logout = createAsyncThunk('auth/logout', async () => {
   await AsyncStorage.removeItem('token');
 });
 
-export const setTokenFromStorage = (token: string) => ({
-  type: 'auth/setToken',
-  payload: token,
-});
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,

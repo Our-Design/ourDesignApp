@@ -1,17 +1,19 @@
 import {StyleSheet} from 'react-native';
-import {Colors, FontSize, Spacing, FontWeight} from '../../styles/vars';
+import {Colors, FontSize, Spacing} from '../../styles/vars';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    padding: Spacing.md,
+    padding: Spacing.lg,
   },
-  title: {
-    fontSize: FontSize.lg,
-    fontWeight: FontWeight.bold as any,
+  heading: {
+    fontSize: FontSize.xl,
+    fontWeight: 'bold',
     color: Colors.text,
+    marginBottom: Spacing.md,
+  },
+  list: {
+    paddingBottom: Spacing.xl,
   },
 });
-
-export default styles;

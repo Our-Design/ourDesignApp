@@ -1,13 +1,13 @@
 export const Colors = {
-    background: '#ffffff',
-    text: '#000000',
-    primary: '#0055ff',
-    secondary: '#ff9900',
-    success: '#4CAF50',
-    error: '#F44336',
-    border: '#e0e0e0',
-    muted: '#f2f2f2',
-  };
+  primary: '#007AFF',
+  background: '#FFFFFF',
+  text: '#1C1C1E',
+  subText: '#6E6E73',
+  border: '#E5E5EA',
+  error: '#FF3B30',
+  success: '#34C759',
+  card: '#F9F9F9',
+};
 
   export const FontSize = {
     xs: 12,

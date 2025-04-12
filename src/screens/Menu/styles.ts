@@ -1,17 +1,20 @@
 import {StyleSheet} from 'react-native';
-import {Colors, FontSize, Spacing, FontWeight} from '../../styles/vars';
+import {Colors, Spacing, FontSize} from '../../styles/vars';
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    padding: Spacing.md,
+    padding: Spacing.lg,
   },
-  title: {
-    fontSize: FontSize.lg,
-    fontWeight: FontWeight.bold as any,
-    color: Colors.text,
+  link: {
+    paddingVertical: Spacing.md,
+    borderBottomWidth: 1,
+    borderColor: Colors.border,
   },
+  linkText: {
+    fontSize: FontSize.md,
+    color: Colors.primary,
+  },
+  list: {},
 });
-
-export default styles;

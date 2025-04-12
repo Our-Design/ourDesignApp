@@ -6,6 +6,8 @@ import RegisterScreen from '../screens/Register';
 import LeadDetailsScreen from '../screens/LeadDetails';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { Colors } from '../styles/vars';
+import WebViewScreen from '../screens/WebView/WebView';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +20,29 @@ const AppNavigator = () => {
       {token ? (
         <>
           <Stack.Screen name="Main" component={TabNavigator} />
-          <Stack.Screen name="LeadDetails" component={LeadDetailsScreen} />
+          <Stack.Screen
+          name="LeadDetails"
+          component={LeadDetailsScreen}
+          options={{
+          headerShown: true,
+          title: 'Lead Details',
+          headerStyle: {
+            backgroundColor: Colors.background,
+          },
+          headerTitleStyle: {
+            fontSize: 18,
+            fontWeight: 'bold',
+            color: Colors.text,
+          },
+          headerTintColor: Colors.primary,
+        }}
+        />
+        <Stack.Screen
+          name="WebViewScreen"
+          component={WebViewScreen}
+          options={({ route }: any) => ({ title: route.params?.title })}
+        />
+
         </>
       ) : (
         <>
