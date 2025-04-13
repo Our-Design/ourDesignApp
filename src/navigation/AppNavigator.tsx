@@ -13,7 +13,6 @@ const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
   const token = useSelector((state: RootState) => state.auth.token);
-  console.log(token);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

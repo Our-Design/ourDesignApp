@@ -1,6 +1,12 @@
-import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  createSelector,
+} from '@reduxjs/toolkit';
 import {fetchAllLeadsAPI, fetchMyLeadsAPI} from '../../api/leads';
 import {setError, setLoading} from './uiSlice';
+import {RootState} from '..';
 
 export interface Lead {
   _id: string;
@@ -14,19 +20,36 @@ export interface Lead {
   createdAt: string;
 }
 
+interface LeadFilters {
+  search: string;
+  sortBy: 'none' | 'price-asc' | 'price-desc';
+  priceMin: number;
+  priceMax: number;
+  status: string[];
+}
+
 interface LeadsState {
   leads: Lead[];
   myLeads: Lead[];
   selectedLead: Lead | null;
+  filters: LeadFilters;
 }
+
+export const defaultFilters: LeadFilters = {
+  search: '',
+  sortBy: 'none',
+  priceMin: 0,
+  priceMax: Infinity,
+  status: ['new', 'sold'],
+};
 
 const initialState: LeadsState = {
   leads: [],
   myLeads: [],
   selectedLead: null,
+  filters: defaultFilters,
 };
 
-// 🔁 Fetch all leads
 export const fetchAllLeads = createAsyncThunk(
   'leads/fetchAll',
   async (_, {dispatch}) => {
@@ -43,7 +66,6 @@ export const fetchAllLeads = createAsyncThunk(
   },
 );
 
-// 🔁 Fetch my leads
 export const fetchMyLeads = createAsyncThunk(
   'leads/fetchMine',
   async (_, {dispatch}) => {
@@ -67,20 +89,48 @@ const leadsSlice = createSlice({
     setSelectedLead(state, action: PayloadAction<Lead>) {
       state.selectedLead = action.payload;
     },
-    clearSelectedLead(state) {
-      state.selectedLead = null;
+    setFilters(state, action: PayloadAction<Partial<LeadFilters>>) {
+      state.filters = {...state.filters, ...action.payload};
+    },
+    resetFilters(state) {
+      state.filters = defaultFilters;
     },
   },
   extraReducers: builder => {
-    builder
-      .addCase(fetchAllLeads.fulfilled, (state, action) => {
-        state.leads = action.payload;
-      })
-      .addCase(fetchMyLeads.fulfilled, (state, action) => {
-        state.myLeads = action.payload;
-      });
+    builder.addCase(fetchAllLeads.fulfilled, (state, action) => {
+      state.leads = action.payload;
+    });
   },
 });
 
-export const {setSelectedLead, clearSelectedLead} = leadsSlice.actions;
+export const {setSelectedLead, setFilters, resetFilters} = leadsSlice.actions;
+
+// ✅ Memoized selector
+export const selectFilteredLeads = createSelector(
+  (state: RootState) => state.leads.leads,
+  (state: RootState) => state.leads.filters,
+  (leads, filters) => {
+    return leads
+      .filter(lead =>
+        lead.customerName.toLowerCase().includes(filters.search.toLowerCase()),
+      )
+      .filter(lead => {
+        return (
+          lead.budget >= filters.priceMin &&
+          lead.budget <= filters.priceMax &&
+          filters.status.includes(lead.status)
+        );
+      })
+      .sort((a, b) => {
+        if (filters.sortBy === 'price-asc') {
+          return a.budget - b.budget;
+        }
+        if (filters.sortBy === 'price-desc') {
+          return b.budget - a.budget;
+        }
+        return 0;
+      });
+  },
+);
+
 export default leadsSlice.reducer;

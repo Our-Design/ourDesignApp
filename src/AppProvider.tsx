@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setToken } from './store/slices/authSlice';
 import AppNavigator from './navigation/AppNavigator';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function AppProvider() {
@@ -24,10 +23,8 @@ export default function AppProvider() {
   }, []);
 
   return (
-    <SafeAreaView style={{flex:1}}  edges={['top', 'left', 'right']}>
       <NavigationContainer>
         <AppNavigator />
       </NavigationContainer>
-    </SafeAreaView>
   );
 }

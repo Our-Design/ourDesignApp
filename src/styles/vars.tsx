@@ -7,6 +7,7 @@ export const Colors = {
   error: '#FF3B30',
   success: '#34C759',
   card: '#F9F9F9',
+  headerBackground: '#F3F8FF',
 };
 
   export const FontSize = {

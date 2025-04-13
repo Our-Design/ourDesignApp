@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors, FontSize, Spacing} from '../../styles/vars';
+import {Colors, FontSize, Spacing, FontWeight} from '../../styles/vars';
 
 export default StyleSheet.create({
   container: {
@@ -7,11 +7,21 @@ export default StyleSheet.create({
     backgroundColor: Colors.background,
     padding: Spacing.lg,
   },
-  heading: {
-    fontSize: FontSize.xl,
-    fontWeight: 'bold',
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: Spacing.sm,
+  },
+  greeting: {
+    fontSize: FontSize.lg,
+    fontWeight: FontWeight.medium as any,
     color: Colors.text,
-    marginBottom: Spacing.md,
+  },
+  count: {
+    fontSize: FontSize.sm,
+    color: Colors.subText,
+    marginBottom: Spacing.sm,
   },
   list: {
     paddingBottom: Spacing.xl,
