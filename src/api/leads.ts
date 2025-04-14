@@ -11,7 +11,7 @@ export const fetchAllLeadsAPI = async () => {
 
 export const fetchMyLeadsAPI = async () => {
   try {
-    const res = await apiClient.get('/leads/my');
+    const res = await apiClient.get('/leads/my-leads');
     return res.data;
   } catch (err: any) {
     throw new Error(err?.response?.data?.message || 'Failed to fetch my leads');

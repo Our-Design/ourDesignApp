@@ -1,15 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
+
+import React, {  useState } from 'react';
+import { TextInput, View } from 'react-native';
 import styles from './styles';
+import Text from '../Text';
 
 interface Props {
   label?: string;
   placeholder?: string;
   value: string;
   onChangeText: (text: string) => void;
-  inputType?: 'text' | 'email' | 'password' | 'phoneNumber';
+  inputType?: 'text' | 'email' | 'password' | 'phoneNumber' | 'numeric';
   required?: boolean;
+  style?: object;
+  containerStyle?: object;
 }
 
 const FormInput: React.FC<Props> = ({
@@ -19,12 +22,20 @@ const FormInput: React.FC<Props> = ({
   onChangeText,
   inputType = 'text',
   required = false,
+  style,
+  containerStyle,
 }) => {
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    validate(value);
-  }, [value]);
+  const handleInputChange = (text:string) => {
+    let formattedText = text;
+
+    if (inputType === 'phoneNumber' || inputType === 'numeric') {
+      formattedText = text.replace(/[^0-9]/g, '');
+    }
+    validate(formattedText);
+    onChangeText(formattedText);
+  };
 
   const validate = (text: string) => {
     if (required && !text) {
@@ -62,19 +73,19 @@ const FormInput: React.FC<Props> = ({
   const keyboardType =
     inputType === 'email'
       ? 'email-address'
-      : inputType === 'phoneNumber'
-      ? 'phone-pad'
+      : inputType === 'phoneNumber' || inputType === 'numeric'
+      ? 'numeric'
       : 'default';
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,containerStyle]}>
       {label && <Text style={styles.label}>{label}</Text>}
 
       <TextInput
-        style={[styles.input, !!error && styles.errorInput]}
+        style={[styles.input, style, !!error && styles.errorInput]}
         placeholder={placeholder}
         value={value}
-        onChangeText={onChangeText}
+        onChangeText={handleInputChange}
         secureTextEntry={inputType === 'password'}
         autoCapitalize="none"
         keyboardType={keyboardType}

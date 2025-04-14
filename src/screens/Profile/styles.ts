@@ -1,33 +1,84 @@
 import {StyleSheet} from 'react-native';
-import {Colors, FontSize, Spacing, FontWeight} from '../../styles/vars';
+import {Colors, FontSize, Radius, Spacing} from '../../styles/vars';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    padding: Spacing.lg,
     backgroundColor: Colors.background,
+    padding: Spacing.lg,
+    paddingBottom: 100,
   },
-  title: {
-    fontSize: FontSize.xl,
-    fontWeight: FontWeight.bold as any,
-    color: Colors.text,
+  card: {
+    padding: Spacing.lg,
+    borderRadius: Radius.lg,
+    backgroundColor: Colors.card,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: Spacing.lg,
+  },
+  avatar: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: Colors.soft,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: Spacing.md,
+  },
+  avatarText: {
+    fontSize: FontSize.lg,
+    fontWeight: '600',
+    color: Colors.heading,
+  },
+  name: {
+    fontSize: FontSize.lg,
+    fontWeight: '600',
+    color: Colors.text,
+    textTransform: 'capitalize',
+  },
+  phone: {
+    fontSize: FontSize.sm,
+    color: Colors.accent,
+    marginTop: 2,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: Spacing.md,
+  },
+  icon: {
+    color: Colors.primary,
+    marginRight: Spacing.sm,
+    width: 24,
   },
   label: {
     fontSize: FontSize.sm,
-    color: Colors.subText,
-    marginTop: Spacing.md,
+    color: Colors.accent,
+    marginRight: Spacing.xs,
+    width: 90,
   },
   value: {
     fontSize: FontSize.md,
     color: Colors.text,
-    marginTop: Spacing.xs,
+    flex: 1,
+    fontWeight: '500',
   },
-  buttonContainer: {
+  logoutBtn: {
     marginTop: Spacing.xl,
+    backgroundColor: Colors.soft,
   },
-  message: {
+  logoutText: {
+    color: Colors.heading,
+  },
+  emptyText: {
     fontSize: FontSize.md,
     color: Colors.text,
+    textAlign: 'center',
+    marginTop: Spacing.xl,
+  },
+  flexStyle: {
+    flex: 1,
   },
 });

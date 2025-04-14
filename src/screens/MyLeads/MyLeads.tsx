@@ -1,21 +1,24 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
-import { FlatList, Text, View } from 'react-native';
+
+import React from 'react';
+import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { fetchMyLeads, setSelectedLead } from '../../store/slices/leadsSlice';
 import styles from './styles';
 import LeadCard from '../../components/LeadCard';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import Text from '../../components/Text';
 
 const MyLeads = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation<any>();
   const myLeads = useSelector((state: RootState) => state.leads.myLeads);
 
-  useEffect(() => {
-    dispatch(fetchMyLeads());
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(fetchMyLeads());
+    }, [dispatch])
+  );
 
   const handlePress = (lead: any) => {
     dispatch(setSelectedLead(lead));
@@ -24,14 +27,15 @@ const MyLeads = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>My Purchased Leads</Text>
-
       <FlatList
         data={myLeads}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
           <LeadCard lead={item} onPress={() => handlePress(item)} />
         )}
+        ListEmptyComponent={
+          <Text style={styles.emptyText} >No Leads to Show</Text>
+        }
         contentContainerStyle={styles.list}
       />
     </View>

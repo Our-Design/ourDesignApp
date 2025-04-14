@@ -2,19 +2,30 @@ import {  useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setToken } from './store/slices/authSlice';
+import { setToken, setUser } from './store/slices/authSlice';
 import AppNavigator from './navigation/AppNavigator';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { View } from 'react-native';
+import { FontSize, Spacing } from './styles/vars';
+import { isAndroid } from './utils/platformHelper';
 
 
 export default function AppProvider() {
 
   const dispatch = useDispatch();
+    const insets = useSafeAreaInsets();
+
 
   useEffect(() => {
     const checkToken = async () => {
       const storedToken = await AsyncStorage.getItem('token');
+      const user = await AsyncStorage.getItem('user');
+
       if (storedToken) {
         dispatch(setToken(storedToken));
+      }
+      if(user){
+        dispatch(setUser(JSON.parse(user)));
       }
     };
 
@@ -23,8 +34,10 @@ export default function AppProvider() {
   }, []);
 
   return (
+    <View style={{paddingTop: isAndroid ? insets.top : Spacing.na, paddingBottom: isAndroid ? Spacing.sm : Spacing.na, flex:FontSize.x1}}>
       <NavigationContainer>
         <AppNavigator />
       </NavigationContainer>
+    </View>
   );
 }

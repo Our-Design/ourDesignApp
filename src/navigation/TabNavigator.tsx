@@ -41,10 +41,19 @@ const TabNavigator = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: Colors.subText,
+        tabBarInactiveTintColor: Colors.accent,
         tabBarStyle: {
           backgroundColor: Colors.background,
           borderTopColor: Colors.border,
+          // ✅ Add shadow here
+          shadowColor: Colors.shadow,
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.05,
+          shadowRadius: 10,
+          elevation: 8,
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+          position: 'absolute',
         },
         tabBarIcon: ({ color, size }) =>
           getTabIcon(route.name, color, size),

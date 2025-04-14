@@ -1,16 +1,35 @@
 export const Colors = {
-  primary: '#007AFF',
-  background: '#FFFFFF',
-  text: '#1C1C1E',
-  subText: '#6E6E73',
-  border: '#E5E5EA',
+  // Base
+  background: '#ffffff',       // --background
+  text: '#171717',             // --foreground
+  heading: '#0d0d0d',          // --heading
+
+  // Brand
+  primary: '#011640',          // --primary
+  secondary: '#FFF7F0',        // --secondary
+  accent: '#848484',           // --accent
+
+  // UI
+  muted: '#f5f5f5',            // --muted
+  soft: '#FFD6D6',             // --soft
+  border: '#dddddd',           // --border
+  shadow: 'rgba(0, 0, 0)',// --shadow
+
+  // Tabs, cards, input fields
+  card: '#FDFDFD',
+  subText: '#848484',          // reuse --accent
   error: '#FF3B30',
-  success: '#34C759',
-  card: '#F9F9F9',
-  headerBackground: '#F3F8FF',
+  success: '#28a745',
+  warning: '#ffc107',
+
+  // Optional new semantic names
+  headerBackground: '#FFF7F1', // use secondary for light warm headers
+  webViewBackground: '#ededed',
+  lighterHeader: '#FFF9F6',
 };
 
   export const FontSize = {
+    x1:1,
     xs: 12,
     sm: 14,
     md: 16,
@@ -19,6 +38,7 @@ export const Colors = {
   };
 
   export const Spacing = {
+    na: 0,
     xs: 4,
     sm: 8,
     md: 16,
@@ -30,10 +50,18 @@ export const Colors = {
     sm: 4,
     md: 8,
     lg: 12,
+    xl: 20,
+    max: 40,
   };
 
   export const FontWeight = {
     normal: '400',
     medium: '500',
     bold: '700',
+  };
+
+  export const FontFamily = {
+    regular: 'Poppins-Regular',
+    medium: 'Poppins-Medium',
+    bold: 'Poppins-Bold',
   };

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { FlatList, Text, View, TouchableOpacity } from 'react-native';
+import { FlatList, View, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import {
@@ -14,6 +14,9 @@ import LeadCard from '../../components/LeadCard';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LeadSearchFilterBar from '../../components/LeadSearchFilteraBar';
+import CustomStatusBar from '../../components/CustomStatusBar';
+import { Colors } from '../../styles/vars';
+import Text from '../../components/Text';
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -37,6 +40,8 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
+       <CustomStatusBar backgroundColor={Colors.headerBackground}/>
+      <View style={styles.topContainer}>
       {/* Greeting + Refresh */}
       <View style={styles.headerRow}>
         <Text style={styles.greeting}>Hi {user?.name || 'there'} 👋</Text>
@@ -54,6 +59,7 @@ const Home = () => {
         onChangeText={(text) => dispatch(setFilters({ search: text }))}
         onFilterChange={(filterValues) => dispatch(setFilters(filterValues))}
       />
+      </View>
 
       {/* Lead list */}
       <FlatList
@@ -62,6 +68,9 @@ const Home = () => {
         renderItem={({ item }) => (
           <LeadCard lead={item} onPress={() => handleLeadPress(item)} />
         )}
+        ListEmptyComponent={
+          <Text style={styles.emptyText} >No Leads to Show</Text>
+        }
         contentContainerStyle={styles.list}
       />
     </View>

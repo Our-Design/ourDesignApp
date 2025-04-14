@@ -1,31 +1,32 @@
 import {StyleSheet} from 'react-native';
-import {Colors, FontSize, Spacing, FontWeight} from '../../styles/vars';
+import {Colors, FontSize, Spacing} from '../../styles/vars';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.secondary,
     padding: Spacing.lg,
     justifyContent: 'center',
-    backgroundColor: Colors.background,
+  },
+  card: {
+    marginBottom: Spacing.xl,
   },
   title: {
-    fontSize: FontSize.xl,
-    fontWeight: FontWeight.bold as any,
-    color: Colors.text,
+    fontSize: FontSize.lg,
+    fontWeight: 'bold',
+    color: Colors.heading,
     marginBottom: Spacing.lg,
   },
   footer: {
-    marginTop: Spacing.lg,
     flexDirection: 'row',
     justifyContent: 'center',
+    marginTop: Spacing.md,
   },
   footerText: {
-    fontSize: FontSize.sm,
-    color: Colors.text,
+    color: Colors.subText,
   },
   link: {
-    fontSize: FontSize.sm,
     color: Colors.primary,
-    fontWeight: FontWeight.medium as any,
+    fontWeight: '600',
   },
 });

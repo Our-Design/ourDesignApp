@@ -5,10 +5,13 @@
  * @memberof - View Component
  */
 import React, { memo, useMemo, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { WebView as RNWebView } from 'react-native-webview';
 import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import styles from './styles';
+import CustomStatusBar from '../../components/CustomStatusBar';
+import { Colors } from '../../styles/vars';
+import Text from '../../components/Text';
 
 export interface SourceParams {
   source: {
@@ -73,6 +76,7 @@ const WebViewScreen = ({route}:any) => {
 
   return (
     <View style={styles.container} testID="webViewScreen">
+      <CustomStatusBar backgroundColor={Colors.webViewBackground}/>
       <RNWebView
         source={webViewSource as WebViewSource}
         onError={handleWebViewError}

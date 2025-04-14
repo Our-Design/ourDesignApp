@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { View, Text, Button, Pressable } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { register } from '../../store/slices/authSlice';
-import { AppDispatch } from '../../store';
+import React, {useState} from 'react';
+import {View, Pressable, KeyboardAvoidingView} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {register} from '../../store/slices/authSlice';
 import styles from './styles';
 import FormInput from '../../components/FormInput';
-import { useNavigation } from '@react-navigation/native';
+import {AppDispatch} from '../../store';
+import {useNavigation} from '@react-navigation/native';
+import CustomStatusBar from '../../components/CustomStatusBar';
+import ShadowCard from '../../components/ShadowCard';
+import PrimaryButton from '../../components/PrimaryButton';
+import {Colors} from '../../styles/vars';
+import {Text} from 'react-native-gesture-handler';
+import {isIOS} from '../../utils/platformHelper';
 
 const Register = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,50 +22,59 @@ const Register = () => {
   const [password, setPassword] = useState('');
 
   const handleRegister = () => {
-    if (!name || !phone || !password) {return;}
-    dispatch(register({ name, phone, password }));
+    if (!name || !phone || !password) {
+      return;
+    }
+    dispatch(register({name, phone, password}));
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Register</Text>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={isIOS ? 40 : 0}
+      behavior={isIOS ? 'padding' : undefined}
+      style={styles.container}>
+      <CustomStatusBar backgroundColor={Colors.background} />
 
-      <FormInput
-        label="Name"
-        placeholder="Enter your name"
-        value={name}
-        onChangeText={setName}
-        inputType="text"
-        required
-      />
+      <ShadowCard style={styles.card}>
+        <Text style={styles.title}>Register</Text>
 
-      <FormInput
-        label="Phone Number"
-        placeholder="Enter your phone number"
-        value={phone}
-        onChangeText={setPhone}
-        inputType="phoneNumber"
-        required
-      />
+        <FormInput
+          label="Full Name"
+          placeholder="Enter your name"
+          value={name}
+          onChangeText={setName}
+          inputType="text"
+          required
+        />
 
-      <FormInput
-        label="Password"
-        placeholder="Create a password"
-        value={password}
-        onChangeText={setPassword}
-        inputType="password"
-        required
-      />
+        <FormInput
+          label="Phone Number"
+          placeholder="Enter phone number"
+          value={phone}
+          onChangeText={setPhone}
+          inputType="phoneNumber"
+          required
+        />
 
-      <Button title="Register" onPress={handleRegister} />
+        <FormInput
+          label="Password"
+          placeholder="Create password"
+          value={password}
+          onChangeText={setPassword}
+          inputType="password"
+          required
+        />
+
+        <PrimaryButton title="Register" onPress={handleRegister} />
+      </ShadowCard>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Already have an account?</Text>
+        <Text style={styles.footerText}>Already registered?</Text>
         <Pressable onPress={() => navigation.navigate('Login')}>
           <Text style={styles.link}> Login</Text>
         </Pressable>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

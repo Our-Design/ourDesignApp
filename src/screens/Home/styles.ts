@@ -1,11 +1,18 @@
 import {StyleSheet} from 'react-native';
-import {Colors, FontSize, Spacing, FontWeight} from '../../styles/vars';
+import {
+  Colors,
+  FontSize,
+  Spacing,
+  FontWeight,
+  Radius,
+  FontFamily,
+} from '../../styles/vars';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    padding: Spacing.lg,
+    paddingBottom: Spacing.xl,
   },
   headerRow: {
     flexDirection: 'row',
@@ -15,8 +22,9 @@ export default StyleSheet.create({
   },
   greeting: {
     fontSize: FontSize.lg,
-    fontWeight: FontWeight.medium as any,
+    fontWeight: FontWeight.bold as any,
     color: Colors.text,
+    fontFamily: FontFamily.bold,
   },
   count: {
     fontSize: FontSize.sm,
@@ -25,5 +33,17 @@ export default StyleSheet.create({
   },
   list: {
     paddingBottom: Spacing.xl,
+    padding: Spacing.lg,
+  },
+  topContainer: {
+    backgroundColor: Colors.headerBackground,
+    padding: Spacing.lg,
+    borderBottomEndRadius: Radius.max,
+    borderBottomStartRadius: Radius.max,
+  },
+  emptyText: {
+    fontSize: FontSize.lg,
+    textAlign: 'center',
+    marginTop: Spacing.xl,
   },
 });

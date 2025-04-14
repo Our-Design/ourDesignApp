@@ -3,15 +3,17 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Modal,
-  Text,
   Switch,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Modal from 'react-native-modal';
 import styles from './styles';
 import { resetFilters } from '../../store/slices/leadsSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
+import FormInput from '../FormInput';
+import { Colors } from '../../styles/vars';
+import Text from '../Text';
 
 interface Props {
   value: string;
@@ -30,16 +32,21 @@ const LeadSearchFilterBar: React.FC<Props> = ({
   onFilterChange,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [sortBy, setSortBy] = useState<'none' | 'price-asc' | 'price-desc'>(
-    'none'
-  );
+  const [sortBy, setSortBy] = useState<'none' | 'price-asc' | 'price-desc'>('none');
   const [priceMin, setPriceMin] = useState('');
   const [priceMax, setPriceMax] = useState('');
   const [status, setStatus] = useState<{ [key: string]: boolean }>({
     new: true,
     sold: true,
   });
+
   const dispatch = useDispatch<AppDispatch>();
+
+  const hasActiveFilters =
+  sortBy !== 'none' ||
+  priceMin.trim() !== '' ||
+  priceMax.trim() !== '' ||
+  Object.values(status).some((v) => !v);
 
   const applyFilters = () => {
     const selectedStatuses = Object.keys(status).filter((key) => status[key]);
@@ -54,17 +61,20 @@ const LeadSearchFilterBar: React.FC<Props> = ({
 
   const handleClearFilters = () => {
     dispatch(resetFilters());
+    setPriceMax('');
+    setPriceMin('');
+    setSortBy('none');
     setModalVisible(false);
   };
-
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.searchBox}>
-          <Ionicons name="search" size={18} color="#999" />
+          <Ionicons name="search" size={18} color={Colors.accent} />
           <TextInput
             placeholder="Search by name..."
+            placeholderTextColor={Colors.accent}
             style={styles.input}
             value={value}
             onChangeText={onChangeText}
@@ -74,77 +84,119 @@ const LeadSearchFilterBar: React.FC<Props> = ({
           onPress={() => setModalVisible(true)}
           style={styles.filterButton}
         >
-          <Ionicons name="filter" size={20} color="#fff" />
+          <Ionicons name="filter" size={20} color={Colors.background} />
+          {hasActiveFilters && <View style={styles.filterBadge} />}
         </TouchableOpacity>
       </View>
 
-      {/* Modal */}
+      {/* Filter Modal */}
       <Modal
-        visible={modalVisible}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
+        isVisible={modalVisible}
+        onBackdropPress={() => setModalVisible(false)}
+        onSwipeComplete={() => setModalVisible(false)}
+        swipeDirection="down"
+        style={styles.modalWrapper}
+        statusBarTranslucent
       >
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>Filter Options</Text>
+        <View style={styles.modalBox}>
+          <View style={styles.dragIndicator} />
+          <Text style={styles.modalTitle}>Filter Options</Text>
 
-            {/* Sort */}
-            <Text>Sort by Price:</Text>
-            <View style={styles.sortRow}>
-              <TouchableOpacity onPress={() => setSortBy('price-asc')}>
-                <Text style={sortBy === 'price-asc' ? styles.active : undefined}>Low to High</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => setSortBy('price-desc')}>
-                <Text style={sortBy === 'price-desc' ? styles.active : undefined}>High to Low</Text>
-              </TouchableOpacity>
-            </View>
-
-            {/* Price Range */}
-            <Text>Price Range:</Text>
-            <View style={styles.rangeRow}>
-              <TextInput
-                placeholder="Min"
-                keyboardType="numeric"
-                value={priceMin}
-                onChangeText={setPriceMin}
-                style={styles.rangeInput}
-              />
-              <TextInput
-                placeholder="Max"
-                keyboardType="numeric"
-                value={priceMax}
-                onChangeText={setPriceMax}
-                style={styles.rangeInput}
-              />
-            </View>
-
-            {/* Status Filter */}
-            <Text>Status:</Text>
-            {Object.keys(status).map((key) => (
-              <View key={key} style={styles.statusRow}>
-                <Text>{key}</Text>
-                <Switch
-                  value={status[key]}
-                  onValueChange={(val) =>
-                    setStatus((prev) => ({ ...prev, [key]: val }))
-                  }
-                />
-              </View>
-            ))}
-
-            <View style={styles.modalActions}>
+          {/* Sort */}
+          <Text style={styles.label}>Sort by Price:</Text>
+          <View style={styles.sortColumn}>
             <TouchableOpacity
-                onPress={handleClearFilters}
-                style={[styles.applyButton, styles.clearButton]}
+              onPress={() => setSortBy('price-asc')}
+              style={[
+                styles.sortOption,
+                sortBy === 'price-asc' && styles.activeSort,
+              ]}
             >
-                <Text style={styles.clearText}>Clear Filters</Text>
+              <Ionicons
+                name="arrow-up-outline"
+                size={18}
+                color={sortBy === 'price-asc' ? Colors.primary : Colors.accent}
+              />
+              <Text
+                style={[
+                  styles.sortLabel,
+                  sortBy === 'price-asc' ? styles.activeSortText : {},
+                ]}
+              >
+                Low to High
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setSortBy('price-desc')}
+              style={[
+                styles.sortOption,
+                sortBy === 'price-desc' && styles.activeSort,
+              ]}
+            >
+              <Ionicons
+                name="arrow-down-outline"
+                size={18}
+                color={sortBy === 'price-desc' ? Colors.primary : Colors.accent}
+              />
+              <Text
+                style={[
+                  styles.sortLabel,
+                  sortBy === 'price-desc' ? styles.activeSortText : {},
+                ]}
+              >
+                High to Low
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Price Range */}
+          <Text style={styles.label}>Price Range:</Text>
+          <View style={styles.rangeRow}>
+            <FormInput
+              placeholder="Min"
+              inputType="numeric"
+              value={priceMin}
+              onChangeText={setPriceMin}
+              style={styles.rangeInput}
+              containerStyle={styles.containerStyle}
+            />
+            <FormInput
+              placeholder="Max"
+              inputType="numeric"
+              value={priceMax}
+              onChangeText={setPriceMax}
+              style={styles.rangeInput}
+              containerStyle={styles.containerStyle}
+            />
+          </View>
+
+          {/* Status */}
+          <Text style={styles.label}>Status:</Text>
+          {Object.keys(status).map((key) => (
+            <View key={key} style={styles.statusRow}>
+              <Text style={styles.sortLabel}>{key.toUpperCase()}</Text>
+              <Switch
+                value={status[key]}
+                onValueChange={(val) =>
+                  setStatus((prev) => ({ ...prev, [key]: val }))
+                }
+              />
+            </View>
+          ))}
+
+          {/* Actions */}
+          <View style={styles.modalActions}>
+            <TouchableOpacity
+              onPress={handleClearFilters}
+              style={[styles.applyButton, styles.clearButton]}
+            >
+              <Text style={styles.clearText}>Clear Filters</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={applyFilters} style={styles.applyButton}>
-                <Text style={styles.applyText}>Apply Filters</Text>
+              <Text style={styles.applyText}>Apply Filters</Text>
             </TouchableOpacity>
-            </View>
           </View>
         </View>
       </Modal>

@@ -11,13 +11,20 @@ import {RootState} from '..';
 export interface Lead {
   _id: string;
   customerName: string;
-  customerMobile: number;
-  location: string;
-  budget: number;
-  status: string;
+  customerMobile: string;
+  address?: string;
+  budget?: number;
+  metaData?: Record<string, any>;
+  status: 'new' | 'sold';
   isVerified: boolean;
-  assignedTo: string | null;
+  assignedTo?: string | null;
   createdAt: string;
+  updatedAt: string;
+
+  // New fields
+  propertyType?: string;
+  description?: string;
+  propertySize?: number;
 }
 
 interface LeadFilters {
@@ -112,21 +119,25 @@ export const selectFilteredLeads = createSelector(
   (leads, filters) => {
     return leads
       .filter(lead =>
-        lead.customerName.toLowerCase().includes(filters.search.toLowerCase()),
+        lead.customerName?.toLowerCase().includes(filters.search.toLowerCase()),
       )
       .filter(lead => {
+        const budget = lead.budget ?? 0; // fallback to 0
         return (
-          lead.budget >= filters.priceMin &&
-          lead.budget <= filters.priceMax &&
+          budget >= filters.priceMin &&
+          budget <= filters.priceMax &&
           filters.status.includes(lead.status)
         );
       })
       .sort((a, b) => {
+        const budgetA = a.budget ?? 0;
+        const budgetB = b.budget ?? 0;
+
         if (filters.sortBy === 'price-asc') {
-          return a.budget - b.budget;
+          return budgetA - budgetB;
         }
         if (filters.sortBy === 'price-desc') {
-          return b.budget - a.budget;
+          return budgetB - budgetA;
         }
         return 0;
       });

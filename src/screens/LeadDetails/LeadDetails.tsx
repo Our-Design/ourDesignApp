@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import styles from './styles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Colors } from '../../styles/vars';
+import Text from '../../components/Text';
 
 const LeadDetails = () => {
   const lead = useSelector((state: RootState) => state.leads.selectedLead);
@@ -15,27 +18,85 @@ const LeadDetails = () => {
     );
   }
 
+  const createdDate = new Date(lead.createdAt).toLocaleDateString();
+  const newLead = lead.status === 'new';
+
   return (
+    <View style={styles.container}>
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>{lead.customerName}</Text>
-      <Text style={styles.label}>Phone:</Text>
-      <Text style={styles.value}>{lead.customerMobile}</Text>
+      {/* Title & Location */}
+      <Text style={styles.title}>{lead.propertyType}</Text>
 
-      <Text style={styles.label}>Location:</Text>
-      <Text style={styles.value}>{lead.location}</Text>
+      <View style={styles.locationRow}>
+        <Ionicons name="location-outline" size={16} color={Colors.accent} />
+        <Text style={styles.locationText}>{lead.address}</Text>
+      </View>
 
-      <Text style={styles.label}>Budget:</Text>
-      <Text style={styles.value}>₹{lead.budget}</Text>
+      {/* Budget & Info */}
+      <Text style={styles.label}>
+        Budget: <Text style={styles.value}>₹ {lead.budget}</Text>
+      </Text>
+      <Text style={styles.label}>
+        Size: <Text style={styles.value}>{lead.propertySize} sqft</Text>
+      </Text>
+      <Text style={styles.label}>
+        Posted on: <Text style={styles.value}>{createdDate}</Text>
+      </Text>
 
-      <Text style={styles.label}>Status:</Text>
-      <Text style={styles.value}>{lead.status}</Text>
+      {/* Description */}
+      {lead.description && (
+        <>
+          <Text style={styles.sectionHeading}>DESCRIPTION</Text>
+          <Text style={styles.description}>{lead.description}</Text>
+        </>
+      )}
 
-      <Text style={styles.label}>Verified:</Text>
-      <Text style={styles.value}>{lead.isVerified ? 'Yes' : 'No'}</Text>
+      <View style={styles.divider} />
 
-      <Text style={styles.label}>Created:</Text>
-      <Text style={styles.value}>{new Date(lead.createdAt).toLocaleString()}</Text>
+      {/* Owner Details */}
+      <Text style={styles.label}>Owner Details:</Text>
+      <View style={styles.ownerRow}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>
+            {lead.customerName?.charAt(0).toUpperCase()}
+          </Text>
+        </View>
+        <View style={styles.ownerDetails}>
+          <Text style={styles.ownerName}>{lead.customerName}</Text>
+          <Text style={styles.ownerContact}>{lead.customerMobile}</Text>
+          <Pressable>
+            <Text style={styles.profileLink}>View Profile</Text>
+          </Pressable>
+        </View>
+      </View>
+
+      {/* Contact */}
+      <Text style={styles.label}>Contact owner:</Text>
+      <View style={styles.contactRow}>
+        <Pressable style={styles.contactIcon}>
+          <Ionicons name="logo-whatsapp" size={20} color={Colors.background} />
+        </Pressable>
+        <Pressable style={styles.contactIcon}>
+          <Ionicons name="chatbubble-ellipses-outline" size={20} color={Colors.background} />
+        </Pressable>
+        <Pressable style={styles.contactIcon}>
+          <Ionicons name="call-outline" size={20} color={Colors.background} />
+        </Pressable>
+      </View>
     </ScrollView>
+      <View style={styles.footer}>
+        {
+          newLead ?
+          <Pressable style={styles.buyButton} onPress={() => {}}>
+            <Text style={styles.buyButtonText}>Buy Lead</Text>
+          </Pressable> :
+          <Pressable style={[styles.buyButton,{backgroundColor: Colors.soft}]} onPress={() => {}}>
+            <Text style={[styles.buyButtonText, {color: Colors.subText}]}>Sold</Text>
+          </Pressable>
+        }
+
+      </View>
+    </View>
   );
 };
 

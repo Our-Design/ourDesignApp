@@ -16,4 +16,9 @@ export default StyleSheet.create({
   list: {
     paddingBottom: Spacing.xl,
   },
+  emptyText: {
+    fontSize: FontSize.lg,
+    textAlign: 'center',
+    marginTop: Spacing.xl,
+  },
 });

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors, Spacing, FontSize} from '../../styles/vars';
+import {Colors, Spacing} from '../../styles/vars';
 
 export default StyleSheet.create({
   container: {
@@ -8,13 +8,20 @@ export default StyleSheet.create({
     padding: Spacing.lg,
   },
   link: {
-    paddingVertical: Spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
     borderBottomWidth: 1,
-    borderColor: Colors.border,
+    borderColor: '#eee',
   },
+
   linkText: {
-    fontSize: FontSize.md,
-    color: Colors.primary,
+    fontSize: 16,
+    color: '#333',
+  },
+
+  icon: {
+    marginRight: 12,
   },
   list: {},
 });

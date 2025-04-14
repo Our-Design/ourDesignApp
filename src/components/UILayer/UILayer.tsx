@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Modal, Text, View, Pressable, ActivityIndicator } from 'react-native';
+import { Modal, View, Pressable, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { resetUI } from '../../store/slices/uiSlice';
 import Toast from 'react-native-toast-message';
 import styles from './styles';
+import Text from '../Text';
 
 const UILayer = () => {
   const { loading, error, success } = useSelector((state: RootState) => state.ui);
@@ -25,7 +26,7 @@ const UILayer = () => {
 
   return (
     <>
-      <Modal transparent animationType="fade" visible={isVisible}>
+      <Modal transparent animationType="fade" visible={isVisible} statusBarTranslucent>
         <View style={styles.modalBackground}>
           {loading && (
             <View style={styles.loaderBox}>

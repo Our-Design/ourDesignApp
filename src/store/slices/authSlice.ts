@@ -3,9 +3,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {login as loginAPI, register as registerAPI} from '../../api/auth';
 import {setLoading, setError, setSuccess} from './uiSlice';
 
+interface UserState {
+  _id: string;
+  name: string;
+  phone: string;
+  role: string;
+  walletBalance: number;
+  address: string | null;
+  createdAt: string;
+}
 interface AuthState {
   token: string | null;
-  user: any | null;
+  user: UserState | null;
 }
 
 const initialState: AuthState = {
@@ -20,6 +29,7 @@ export const login = createAsyncThunk(
       dispatch(setLoading(true));
       const data = await loginAPI(phone, password);
       await AsyncStorage.setItem('token', data.accessToken);
+      await AsyncStorage.setItem('user', JSON.stringify(data.user));
       dispatch(setSuccess('Login successful'));
       return data;
     } catch (err: any) {
@@ -41,6 +51,7 @@ export const register = createAsyncThunk(
       dispatch(setLoading(true));
       const data = await registerAPI({name, phone, password});
       await AsyncStorage.setItem('token', data.accessToken);
+      await AsyncStorage.setItem('user', JSON.stringify(data.user));
       dispatch(setSuccess('Registration successful'));
       return data;
     } catch (err: any) {
@@ -54,6 +65,7 @@ export const register = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async () => {
   await AsyncStorage.removeItem('token');
+  await AsyncStorage.removeItem('user');
 });
 
 const authSlice = createSlice({
@@ -62,6 +74,9 @@ const authSlice = createSlice({
   reducers: {
     setToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
+    },
+    setUser(state, action: PayloadAction<UserState>) {
+      state.user = action.payload;
     },
   },
   extraReducers: builder => {
@@ -81,5 +96,5 @@ const authSlice = createSlice({
   },
 });
 
-export const {setToken} = authSlice.actions;
+export const {setToken, setUser} = authSlice.actions;
 export default authSlice.reducer;
