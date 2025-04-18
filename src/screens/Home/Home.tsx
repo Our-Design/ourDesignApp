@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
-import { FlatList, View, TouchableOpacity } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store';
+import React, {useEffect} from 'react';
+import {FlatList, View, TouchableOpacity, Image} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../../store';
 import {
   fetchAllLeads,
   selectFilteredLeads,
@@ -11,12 +11,13 @@ import {
 } from '../../store/slices/leadsSlice';
 import styles from './styles';
 import LeadCard from '../../components/LeadCard';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LeadSearchFilterBar from '../../components/LeadSearchFilteraBar';
 import CustomStatusBar from '../../components/CustomStatusBar';
-import { Colors } from '../../styles/vars';
+import {Colors} from '../../styles/vars';
 import Text from '../../components/Text';
+import Icons from '../../constants/icons';
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,36 +41,43 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-       <CustomStatusBar backgroundColor={Colors.headerBackground}/>
+      <CustomStatusBar backgroundColor={Colors.headerBackground} />
       <View style={styles.topContainer}>
-      {/* Greeting + Refresh */}
-      <View style={styles.headerRow}>
-        <Text style={styles.greeting}>Hi {user?.name || 'there'} 👋</Text>
-        <TouchableOpacity onPress={handleRefresh}>
-          <Ionicons name="refresh" size={22} color="#007AFF" />
-        </TouchableOpacity>
-      </View>
+        {/* Greeting + Refresh */}
+        <View style={styles.headerRow}>
+          <Text style={styles.greeting}>Hi {user?.name || 'there'} 👋</Text>
+          <TouchableOpacity onPress={handleRefresh}>
+            <Ionicons name="refresh" size={22} color="#007AFF" />
+          </TouchableOpacity>
+        </View>
 
-      {/* Lead count */}
-      <Text style={styles.count}>{leads.length} Leads</Text>
+        {/* Lead count */}
+        <Text style={styles.count}>{leads.length} Leads</Text>
 
-      {/* Search + Filter bar */}
-      <LeadSearchFilterBar
-        value={filters.search}
-        onChangeText={(text) => dispatch(setFilters({ search: text }))}
-        onFilterChange={(filterValues) => dispatch(setFilters(filterValues))}
-      />
+        {/* Search + Filter bar */}
+        <LeadSearchFilterBar
+          value={filters.search}
+          onChangeText={text => dispatch(setFilters({search: text}))}
+          onFilterChange={filterValues => dispatch(setFilters(filterValues))}
+        />
       </View>
 
       {/* Lead list */}
       <FlatList
         data={leads}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
+        keyExtractor={item => item._id}
+        renderItem={({item}) => (
           <LeadCard lead={item} onPress={() => handleLeadPress(item)} />
         )}
         ListEmptyComponent={
-          <Text style={styles.emptyText} >No Leads to Show</Text>
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No Leads to Show</Text>
+            <Image
+              source={Icons.noLeads}
+              style={styles.emptyImage}
+              resizeMode="contain"
+            />
+          </View>
         }
         contentContainerStyle={styles.list}
       />

@@ -53,8 +53,9 @@ const AppNavigator = () => {
             options={{
               title: 'OurDesign',
               headerShown: true,
+              headerBackButtonDisplayMode: 'minimal',
               headerStyle: {
-                backgroundColor: Colors.background,
+                backgroundColor: Colors.headerBackground,
               },
               headerTitleStyle: {
                 fontSize: 20,
@@ -71,7 +72,7 @@ const AppNavigator = () => {
               headerShown: true,
               headerBackButtonDisplayMode: 'minimal',
               headerStyle: {
-                backgroundColor: Colors.background,
+                backgroundColor: Colors.headerBackground,
               },
               headerTitleStyle: {
                 fontSize: 20,

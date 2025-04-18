@@ -10,14 +10,27 @@ import {RootState} from '..';
 
 export interface Lead {
   _id: string;
-  customerName: string;
-  customerMobile: string;
-  address?: string;
+
+  // Buyer info (only available when lead is purchased)
+  customerName?: string;
+  customerMobile?: string;
+
+  // Structured address
+  address?: {
+    addressLine1?: string;
+    city?: string;
+    state?: string;
+    pinCode?: string;
+    country?: string;
+  };
+
   budget?: number;
   metaData?: Record<string, any>;
   status: 'new' | 'sold';
   isVerified: boolean;
   assignedTo?: string | null;
+  leadPrice: number;
+
   createdAt: string;
   updatedAt: string;
 
@@ -107,6 +120,9 @@ const leadsSlice = createSlice({
     builder.addCase(fetchAllLeads.fulfilled, (state, action) => {
       state.leads = action.payload;
     });
+    builder.addCase(fetchMyLeads.fulfilled, (state, action) => {
+      state.myLeads = action.payload;
+    });
   },
 });
 
@@ -118,11 +134,12 @@ export const selectFilteredLeads = createSelector(
   (state: RootState) => state.leads.filters,
   (leads, filters) => {
     return leads
-      .filter(lead =>
-        lead.customerName?.toLowerCase().includes(filters.search.toLowerCase()),
-      )
       .filter(lead => {
-        const budget = lead.budget ?? 0; // fallback to 0
+        const name = lead.customerName ?? ''; // Safe fallback
+        return name.toLowerCase().includes(filters.search.toLowerCase());
+      })
+      .filter(lead => {
+        const budget = lead.budget ?? 0;
         return (
           budget >= filters.priceMin &&
           budget <= filters.priceMax &&

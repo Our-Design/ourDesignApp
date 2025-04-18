@@ -1,9 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {handleLogout} from '../utils/logoutHandler';
-
-// Replace this with your actual API URL
-const BASE_URL = 'http://localhost:3000';
+import {BASE_URL} from 'react-native-dotenv';
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -25,13 +23,12 @@ apiClient.interceptors.request.use(
 // OPTIONAL: Add global error handling
 apiClient.interceptors.response.use(
   response => {
-    console.log(response);
+    console.log('API response', response);
     return response;
   },
   async error => {
     console.log('API Error:', error?.response || error?.message);
     if (error?.response?.status === 401) {
-      console.log('Unauthorized! Logging out...');
       await handleLogout();
     }
     return Promise.reject(error);

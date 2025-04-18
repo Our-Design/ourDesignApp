@@ -4,7 +4,6 @@ import {Colors, FontSize, Spacing} from '../../styles/vars';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.secondary,
     padding: Spacing.lg,
     justifyContent: 'center',
   },

@@ -5,13 +5,11 @@ import {login} from '../../store/slices/authSlice';
 import FormInput from '../../components/FormInput';
 import {AppDispatch} from '../../store';
 import {useNavigation} from '@react-navigation/native';
-import CustomStatusBar from '../../components/CustomStatusBar';
 import ShadowCard from '../../components/ShadowCard';
 import PrimaryButton from '../../components/PrimaryButton';
 import styles from './styles';
-import {Colors} from '../../styles/vars';
 import Text from '../../components/Text';
-import {isIOS} from '../../utils/platformHelper';
+import {isIOS, screenHeight} from '../../utils/platformHelper';
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,11 +25,12 @@ const Login = () => {
     dispatch(login({phone, password}));
   };
 
+  console.log(screenHeight);
+
   return (
     <KeyboardAvoidingView
       behavior={isIOS ? 'padding' : undefined}
       style={styles.container}>
-      <CustomStatusBar backgroundColor={Colors.background} />
       <ShadowCard style={styles.card}>
         <Text style={styles.title}>Login</Text>
 

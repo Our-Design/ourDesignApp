@@ -80,5 +80,31 @@ export default StyleSheet.create({
   },
   flexStyle: {
     flex: 1,
+    position: 'relative',
+    overflow: 'hidden',
+    padding: 2,
+  },
+  bgCircleOne: {
+    position: 'absolute',
+    top: -60,
+    right: -20,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    backgroundColor: Colors.soft,
+    opacity: 0.35,
+    zIndex: 1,
+  },
+
+  bgCircleTwo: {
+    position: 'absolute',
+    top: -20,
+    right: -60,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    backgroundColor: Colors.soft,
+    opacity: 0.35,
+    zIndex: 1,
   },
 });

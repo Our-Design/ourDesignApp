@@ -16,7 +16,6 @@ export const register = async (payload: {
   password: string;
   name: string;
 }) => {
-  console.log('Hii, i was called');
   try {
     const response = await apiClient.post('/auth/register', payload);
     return response.data;

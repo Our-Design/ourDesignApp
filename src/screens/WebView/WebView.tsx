@@ -4,13 +4,13 @@
  * @module components/WebViewScreen
  * @memberof - View Component
  */
-import React, { memo, useMemo, useState } from 'react';
-import { View } from 'react-native';
-import { WebView as RNWebView } from 'react-native-webview';
-import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
+import React, {memo, useMemo, useState} from 'react';
+import {View} from 'react-native';
+import {WebView as RNWebView} from 'react-native-webview';
+import {WebViewSource} from 'react-native-webview/lib/WebViewTypes';
 import styles from './styles';
 import CustomStatusBar from '../../components/CustomStatusBar';
-import { Colors } from '../../styles/vars';
+import {Colors} from '../../styles/vars';
 import Text from '../../components/Text';
 
 export interface SourceParams {
@@ -29,11 +29,9 @@ export interface SourceParams {
  * @param {string} [props.text] - The text to display inside the component.
  * @returns {JSX.Element} The rendered component.
  */
-const WebViewScreen = ({route}:any) => {
-  const { url:source, ...props } = route.params;
+const WebViewScreen = ({route}: any) => {
+  const {url: source, ...props} = route.params;
   const [showError, setShowError] = useState(false);
-
-  console.log('source', source);
 
   // Handle WebView errors and log them
   const handleWebViewError = () => {
@@ -57,7 +55,7 @@ const WebViewScreen = ({route}:any) => {
     }
 
     if (typeof source === 'string') {
-      return { uri: source };
+      return {uri: source};
     }
     if (typeof source === 'object') {
       return source;
@@ -76,7 +74,7 @@ const WebViewScreen = ({route}:any) => {
 
   return (
     <View style={styles.container} testID="webViewScreen">
-      <CustomStatusBar backgroundColor={Colors.webViewBackground}/>
+      <CustomStatusBar backgroundColor={Colors.webViewBackground} />
       <RNWebView
         source={webViewSource as WebViewSource}
         onError={handleWebViewError}
