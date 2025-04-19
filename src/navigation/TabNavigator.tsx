@@ -1,12 +1,12 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Home from '../screens/Home';
 import MyLeads from '../screens/MyLeads';
 import Menu from '../screens/Menu';
 import Profile from '../screens/Profile';
-import { Colors } from '../styles/vars';
+import {Colors} from '../styles/vars';
 import TabHeader from '../components/TabHeader';
 
 const Tab = createBottomTabNavigator();
@@ -34,11 +34,10 @@ const getTabIcon = (routeName: string, color: string, size: number) => {
 
 const renderHeader = (title: string) => () => <TabHeader title={title} />;
 
-
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: Colors.accent,
@@ -47,7 +46,7 @@ const TabNavigator = () => {
           borderTopColor: Colors.border,
           // ✅ Add shadow here
           shadowColor: Colors.shadow,
-          shadowOffset: { width: 0, height: -2 },
+          shadowOffset: {width: 0, height: -2},
           shadowOpacity: 0.05,
           shadowRadius: 10,
           elevation: 8,
@@ -55,10 +54,8 @@ const TabNavigator = () => {
           borderTopRightRadius: 16,
           position: 'absolute',
         },
-        tabBarIcon: ({ color, size }) =>
-          getTabIcon(route.name, color, size),
-      })}
-    >
+        tabBarIcon: ({color, size}) => getTabIcon(route.name, color, size),
+      })}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen
         name="MyLeads"
@@ -74,7 +71,6 @@ const TabNavigator = () => {
         options={{
           header: renderHeader('Menu'),
           headerShown: true,
-
         }}
       />
       <Tab.Screen

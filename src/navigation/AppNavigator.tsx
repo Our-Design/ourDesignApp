@@ -8,8 +8,24 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../store';
 import {Colors, FontFamily} from '../styles/vars';
 import WebViewScreen from '../screens/WebView/WebView';
+import {Image, View} from 'react-native';
+import Icons from '../constants/icons';
+import Text from '../components/Text';
+import styles from './styles';
 
 const Stack = createNativeStackNavigator();
+
+const headerTitle = () => (
+  <View style={styles.container}>
+    <Image
+      source={Icons.logo}
+      style={styles.imageStyle}
+      width={30}
+      height={30}
+    />
+    <Text style={styles.base}>OurDesign</Text>
+  </View>
+);
 
 const AppNavigator = () => {
   const token = useSelector((state: RootState) => state.auth.token);
@@ -51,34 +67,20 @@ const AppNavigator = () => {
             name="Login"
             component={LoginScreen}
             options={{
-              title: 'OurDesign',
+              headerTitle: headerTitle,
+              headerTitleAlign: 'center',
               headerShown: true,
               headerBackButtonDisplayMode: 'minimal',
-              headerStyle: {
-                backgroundColor: Colors.headerBackground,
-              },
-              headerTitleStyle: {
-                fontSize: 20,
-                color: Colors.text,
-                fontFamily: FontFamily.regular,
-              },
             }}
           />
           <Stack.Screen
             name="Register"
             component={RegisterScreen}
             options={{
-              title: 'OurDesign',
+              headerTitle: headerTitle,
+              headerTitleAlign: 'center',
               headerShown: true,
               headerBackButtonDisplayMode: 'minimal',
-              headerStyle: {
-                backgroundColor: Colors.headerBackground,
-              },
-              headerTitleStyle: {
-                fontSize: 20,
-                color: Colors.text,
-                fontFamily: FontFamily.regular,
-              },
             }}
           />
         </>

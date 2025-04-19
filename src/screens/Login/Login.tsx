@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
-import {View, Pressable, KeyboardAvoidingView} from 'react-native';
+import {
+  View,
+  Pressable,
+  KeyboardAvoidingView,
+  ImageBackground,
+} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {login} from '../../store/slices/authSlice';
 import FormInput from '../../components/FormInput';
@@ -9,7 +14,10 @@ import ShadowCard from '../../components/ShadowCard';
 import PrimaryButton from '../../components/PrimaryButton';
 import styles from './styles';
 import Text from '../../components/Text';
-import {isIOS, screenHeight} from '../../utils/platformHelper';
+import {isAndroid, isIOS} from '../../utils/platformHelper';
+import Icons from '../../constants/icons';
+import CustomStatusBar from '../../components/CustomStatusBar';
+import {Colors} from '../../styles/vars';
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,43 +33,44 @@ const Login = () => {
     dispatch(login({phone, password}));
   };
 
-  console.log(screenHeight);
-
   return (
-    <KeyboardAvoidingView
-      behavior={isIOS ? 'padding' : undefined}
-      style={styles.container}>
-      <ShadowCard style={styles.card}>
-        <Text style={styles.title}>Login</Text>
+    <ImageBackground source={Icons.background} style={styles.backgroundImage}>
+      {isAndroid && <CustomStatusBar backgroundColor={Colors.background} />}
+      <KeyboardAvoidingView
+        behavior={isIOS ? 'padding' : undefined}
+        style={styles.container}>
+        <ShadowCard style={styles.card}>
+          <Text style={styles.title}>Login</Text>
 
-        <FormInput
-          label="Phone Number"
-          placeholder="Enter phone number"
-          value={phone}
-          onChangeText={setPhone}
-          inputType="phoneNumber"
-          required
-        />
+          <FormInput
+            label="Phone Number"
+            placeholder="Enter phone number"
+            value={phone}
+            onChangeText={setPhone}
+            inputType="phoneNumber"
+            required
+          />
 
-        <FormInput
-          label="Password"
-          placeholder="Enter your password"
-          value={password}
-          onChangeText={setPassword}
-          inputType="password"
-          required
-        />
+          <FormInput
+            label="Password"
+            placeholder="Enter your password"
+            value={password}
+            onChangeText={setPassword}
+            inputType="password"
+            required
+          />
 
-        <PrimaryButton title="Login" onPress={handleLogin} />
-      </ShadowCard>
+          <PrimaryButton title="Login" onPress={handleLogin} />
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>New to application?</Text>
-        <Pressable onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.link}> Register</Text>
-        </Pressable>
-      </View>
-    </KeyboardAvoidingView>
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>New to application?</Text>
+            <Pressable onPress={() => navigation.navigate('Register')}>
+              <Text style={styles.link}> Register</Text>
+            </Pressable>
+          </View>
+        </ShadowCard>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
 

@@ -9,7 +9,7 @@ import RNBootSplash from 'react-native-bootsplash';
 
 export default function App() {
   useEffect(() => {
-    RNBootSplash.hide({fade: true}); // Hide splash screen when ready
+    RNBootSplash.hide({fade: true});
   }, []);
 
   return (

@@ -2,8 +2,8 @@
 
 const Icons = {
   noLeads: require('../assets/images/no-leads.jpeg'),
-  background: require('../assets/images/background.png'),
-  // profile: require('../assets/images/profile.png'),
+  background: require('../assets/images/background.webp'),
+  logo: require('../assets/images/ourLogo.png'),
   // Add more as needed
 };
 

@@ -2,6 +2,9 @@ import {StyleSheet} from 'react-native';
 import {Colors, FontSize, Spacing} from '../../styles/vars';
 
 export default StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: Spacing.lg,

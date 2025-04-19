@@ -4,9 +4,6 @@ import {Colors, FontSize, Spacing} from '../../styles/vars';
 export default StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    resizeMode: 'center',
-    padding: Spacing.lg,
-    justifyContent: 'center',
   },
   container: {
     flex: 1,

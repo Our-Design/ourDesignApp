@@ -1,20 +1,17 @@
-import {  useDispatch } from 'react-redux';
-import { NavigationContainer } from '@react-navigation/native';
-import { useEffect } from 'react';
+import {useDispatch} from 'react-redux';
+import {NavigationContainer} from '@react-navigation/native';
+import {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setToken, setUser } from './store/slices/authSlice';
+import {setToken, setUser} from './store/slices/authSlice';
 import AppNavigator from './navigation/AppNavigator';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { View } from 'react-native';
-import { FontSize, Spacing } from './styles/vars';
-import { isAndroid } from './utils/platformHelper';
-
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {View} from 'react-native';
+import {FontSize, Spacing} from './styles/vars';
+import {isAndroid} from './utils/platformHelper';
 
 export default function AppProvider() {
-
   const dispatch = useDispatch();
-    const insets = useSafeAreaInsets();
-
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     const checkToken = async () => {
@@ -24,17 +21,21 @@ export default function AppProvider() {
       if (storedToken) {
         dispatch(setToken(storedToken));
       }
-      if(user){
+      if (user) {
         dispatch(setUser(JSON.parse(user)));
       }
     };
 
     checkToken();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <View style={{paddingTop: isAndroid ? insets.top : Spacing.na, paddingBottom: isAndroid ? Spacing.sm : Spacing.na, flex:FontSize.x1}}>
+    <View
+      style={{
+        paddingTop: isAndroid ? insets.top : Spacing.na,
+        flex: FontSize.x1,
+      }}>
       <NavigationContainer>
         <AppNavigator />
       </NavigationContainer>

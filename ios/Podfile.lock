@@ -1757,6 +1757,30 @@ PODS:
     - React-logger (= 0.79.0)
     - React-perflogger (= 0.79.0)
     - React-utils (= 0.79.0)
+  - RNBootSplash (6.3.5):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNCAsyncStorage (2.1.2):
     - DoubleConversion
     - glog
@@ -2082,6 +2106,7 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -2240,6 +2265,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNBootSplash:
+    :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNGestureHandler:
@@ -2327,6 +2354,7 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 7f5052913dd72a0e84ca95973f9f8bc97f2c5b95
   ReactCodegen: 16700ce5938fd79c1ff4c5b5735f10830f2e6bd3
   ReactCommon: 1257efa9d0b07517d8b79bb4055eaefac1204807
+  RNBootSplash: 20de3aeff927f38b7a85275033e4459563c908e1
   RNCAsyncStorage: 39c42c1e478e1f5166d1db52b5055e090e85ad66
   RNGestureHandler: ebef699ea17e7c0006c1074e1e423ead60ce0121
   RNReanimated: ac44f3a700ade6834099ff7aa8615644622c4761
