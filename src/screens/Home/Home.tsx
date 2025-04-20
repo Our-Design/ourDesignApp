@@ -18,6 +18,7 @@ import CustomStatusBar from '../../components/CustomStatusBar';
 import {Colors} from '../../styles/vars';
 import Text from '../../components/Text';
 import Icons from '../../constants/icons';
+import {useOnAppResume} from '../../hooks/useOnAppResume';
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -29,6 +30,10 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchAllLeads());
   }, []);
+
+  useOnAppResume(() => {
+    dispatch(fetchAllLeads());
+  });
 
   const handleLeadPress = (lead: any) => {
     dispatch(setSelectedLead(lead));

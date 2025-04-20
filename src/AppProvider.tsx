@@ -8,6 +8,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View} from 'react-native';
 import {FontSize, Spacing} from './styles/vars';
 import {isAndroid} from './utils/platformHelper';
+import AppStateListener from './components/AppStateListener/AppStateListener';
 
 export default function AppProvider() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ export default function AppProvider() {
       }}>
       <NavigationContainer>
         <AppNavigator />
+        <AppStateListener />
       </NavigationContainer>
     </View>
   );

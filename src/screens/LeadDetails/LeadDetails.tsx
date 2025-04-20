@@ -114,9 +114,12 @@ const LeadDetails = () => {
           );
         })
         .catch(error => {
+          const {description} = error?.error;
           Alert.alert(
             'Payment Failed',
-            error?.description || 'Something went wrong.',
+            description && description !== 'undefined'
+              ? description
+              : 'Something went wrong.',
           );
         });
     } catch (err: any) {

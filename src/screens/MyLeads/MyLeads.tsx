@@ -17,10 +17,7 @@ const MyLeads = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log('Mounted');
       dispatch(fetchMyLeads());
-
-      return () => console.log('unmounted');
     }, [dispatch]),
   );
 
