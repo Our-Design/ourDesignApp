@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "265318498893",
+    "project_id": "ourdesign-92612",
+    "storage_bucket": "ourdesign-92612.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265318498893:android:92703f5fab29ecaf9cd204",
+        "android_client_info": {
+          "package_name": "com.ourdesign"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8nXCPJKc466GgBL0HoJVCr6UJYrYdhw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

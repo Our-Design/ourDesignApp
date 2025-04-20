@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Switch,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View, TextInput, TouchableOpacity, Switch} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 import styles from './styles';
-import { resetFilters } from '../../store/slices/leadsSlice';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
+import {resetFilters} from '../../store/slices/leadsSlice';
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../../store';
 import FormInput from '../FormInput';
-import { Colors } from '../../styles/vars';
+import {Colors} from '../../styles/vars';
 import Text from '../Text';
 
 interface Props {
@@ -32,10 +27,12 @@ const LeadSearchFilterBar: React.FC<Props> = ({
   onFilterChange,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [sortBy, setSortBy] = useState<'none' | 'price-asc' | 'price-desc'>('none');
+  const [sortBy, setSortBy] = useState<'none' | 'price-asc' | 'price-desc'>(
+    'none',
+  );
   const [priceMin, setPriceMin] = useState('');
   const [priceMax, setPriceMax] = useState('');
-  const [status, setStatus] = useState<{ [key: string]: boolean }>({
+  const [status, setStatus] = useState<{[key: string]: boolean}>({
     new: true,
     sold: true,
   });
@@ -43,13 +40,13 @@ const LeadSearchFilterBar: React.FC<Props> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const hasActiveFilters =
-  sortBy !== 'none' ||
-  priceMin.trim() !== '' ||
-  priceMax.trim() !== '' ||
-  Object.values(status).some((v) => !v);
+    sortBy !== 'none' ||
+    priceMin.trim() !== '' ||
+    priceMax.trim() !== '' ||
+    Object.values(status).some(v => !v);
 
   const applyFilters = () => {
-    const selectedStatuses = Object.keys(status).filter((key) => status[key]);
+    const selectedStatuses = Object.keys(status).filter(key => status[key]);
     onFilterChange({
       sortBy,
       priceMin: Number(priceMin) || 0,
@@ -73,7 +70,7 @@ const LeadSearchFilterBar: React.FC<Props> = ({
         <View style={styles.searchBox}>
           <Ionicons name="search" size={18} color={Colors.accent} />
           <TextInput
-            placeholder="Search by name..."
+            placeholder="Search by location..."
             placeholderTextColor={Colors.accent}
             style={styles.input}
             value={value}
@@ -82,8 +79,7 @@ const LeadSearchFilterBar: React.FC<Props> = ({
         </View>
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
-          style={styles.filterButton}
-        >
+          style={styles.filterButton}>
           <Ionicons name="filter" size={20} color={Colors.background} />
           {hasActiveFilters && <View style={styles.filterBadge} />}
         </TouchableOpacity>
@@ -96,8 +92,7 @@ const LeadSearchFilterBar: React.FC<Props> = ({
         onSwipeComplete={() => setModalVisible(false)}
         swipeDirection="down"
         style={styles.modalWrapper}
-        statusBarTranslucent
-      >
+        statusBarTranslucent>
         <View style={styles.modalBox}>
           <View style={styles.dragIndicator} />
           <Text style={styles.modalTitle}>Filter Options</Text>
@@ -110,8 +105,7 @@ const LeadSearchFilterBar: React.FC<Props> = ({
               style={[
                 styles.sortOption,
                 sortBy === 'price-asc' && styles.activeSort,
-              ]}
-            >
+              ]}>
               <Ionicons
                 name="arrow-up-outline"
                 size={18}
@@ -121,8 +115,7 @@ const LeadSearchFilterBar: React.FC<Props> = ({
                 style={[
                   styles.sortLabel,
                   sortBy === 'price-asc' ? styles.activeSortText : {},
-                ]}
-              >
+                ]}>
                 Low to High
               </Text>
             </TouchableOpacity>
@@ -132,8 +125,7 @@ const LeadSearchFilterBar: React.FC<Props> = ({
               style={[
                 styles.sortOption,
                 sortBy === 'price-desc' && styles.activeSort,
-              ]}
-            >
+              ]}>
               <Ionicons
                 name="arrow-down-outline"
                 size={18}
@@ -143,8 +135,7 @@ const LeadSearchFilterBar: React.FC<Props> = ({
                 style={[
                   styles.sortLabel,
                   sortBy === 'price-desc' ? styles.activeSortText : {},
-                ]}
-              >
+                ]}>
                 High to Low
               </Text>
             </TouchableOpacity>
@@ -173,13 +164,13 @@ const LeadSearchFilterBar: React.FC<Props> = ({
 
           {/* Status */}
           <Text style={styles.label}>Status:</Text>
-          {Object.keys(status).map((key) => (
+          {Object.keys(status).map(key => (
             <View key={key} style={styles.statusRow}>
               <Text style={styles.sortLabel}>{key.toUpperCase()}</Text>
               <Switch
                 value={status[key]}
-                onValueChange={(val) =>
-                  setStatus((prev) => ({ ...prev, [key]: val }))
+                onValueChange={val =>
+                  setStatus(prev => ({...prev, [key]: val}))
                 }
               />
             </View>
@@ -189,8 +180,7 @@ const LeadSearchFilterBar: React.FC<Props> = ({
           <View style={styles.modalActions}>
             <TouchableOpacity
               onPress={handleClearFilters}
-              style={[styles.applyButton, styles.clearButton]}
-            >
+              style={[styles.applyButton, styles.clearButton]}>
               <Text style={styles.clearText}>Clear Filters</Text>
             </TouchableOpacity>
 

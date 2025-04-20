@@ -77,7 +77,7 @@ const LeadDetails = () => {
       // 2. Razorpay Checkout options
       const options = {
         description: 'Buy this lead',
-        image: 'https://ourdesign.in/logo.png',
+        image: '../../assets/images/ourLogo.png',
         currency: order.currency,
         key: RAZORPAY_KEY_ID,
         amount: order.amount, // in paisa

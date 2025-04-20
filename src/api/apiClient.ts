@@ -23,11 +23,9 @@ apiClient.interceptors.request.use(
 // OPTIONAL: Add global error handling
 apiClient.interceptors.response.use(
   response => {
-    console.log('API response', response);
     return response;
   },
   async error => {
-    console.log('API Error:', error?.response || error?.message);
     if (error?.response?.status === 401) {
       await handleLogout();
     }

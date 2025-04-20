@@ -7,6 +7,7 @@ import {
 import {fetchAllLeadsAPI, fetchMyLeadsAPI} from '../../api/leads';
 import {setError, setLoading} from './uiSlice';
 import {RootState} from '..';
+import {getFullAddress} from '../../utils/common';
 
 export interface Lead {
   _id: string;
@@ -135,8 +136,8 @@ export const selectFilteredLeads = createSelector(
   (leads, filters) => {
     return leads
       .filter(lead => {
-        const name = lead.customerName ?? ''; // Safe fallback
-        return name.toLowerCase().includes(filters.search.toLowerCase());
+        const address = getFullAddress(lead.address) ?? ''; // Safe fallback
+        return address.toLowerCase().includes(filters.search.toLowerCase());
       })
       .filter(lead => {
         const budget = lead.budget ?? 0;

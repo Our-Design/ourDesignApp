@@ -25,6 +25,7 @@ export default StyleSheet.create({
     marginLeft: Spacing.sm,
     fontSize: FontSize.md,
     color: Colors.text,
+    flex: 1,
   },
   filterButton: {
     backgroundColor: Colors.primary,
