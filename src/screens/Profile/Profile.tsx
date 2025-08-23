@@ -1,6 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import {logout} from '../../store/slices/authSlice';
 import {AppDispatch, RootState} from '../../store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,9 +13,14 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const Profile = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigation = useNavigation<any>();
   const user = useSelector((state: RootState) => state.auth.user);
 
   const handleLogout = () => dispatch(logout());
+
+  const handleResetPassword = () => {
+    navigation.navigate('ResetPassword');
+  };
 
   if (!user) {
     return (
@@ -83,6 +89,12 @@ const Profile = () => {
           </View>
         </ShadowCard>
       </View>
+
+      <PrimaryButton
+        title="Reset Password"
+        onPress={handleResetPassword}
+        style={styles.resetPasswordBtn}
+      />
 
       <PrimaryButton
         title="Logout"

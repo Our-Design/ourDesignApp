@@ -23,14 +23,16 @@ const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation<any>();
 
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [hasEmailError, setHasEmailError] = useState(false);
+  const [hasPasswordError, setHasPasswordError] = useState(false);
 
   const handleLogin = () => {
-    if (!phone || !password) {
+    if (!email || !password || hasEmailError || hasPasswordError) {
       return;
     }
-    dispatch(login({phone, password}));
+    dispatch(login({email, password}));
   };
 
   return (
@@ -43,12 +45,13 @@ const Login = () => {
           <Text style={styles.title}>Login</Text>
 
           <FormInput
-            label="Phone Number"
-            placeholder="Enter phone number"
-            value={phone}
-            onChangeText={setPhone}
-            inputType="phoneNumber"
+            label="Email Address"
+            placeholder="Enter your email address"
+            value={email}
+            onChangeText={setEmail}
+            inputType="email"
             required
+            onValidationChange={setHasEmailError}
           />
 
           <FormInput
@@ -58,13 +61,24 @@ const Login = () => {
             onChangeText={setPassword}
             inputType="password"
             required
+            onValidationChange={setHasPasswordError}
           />
 
-          <PrimaryButton title="Login" onPress={handleLogin} />
+          <PrimaryButton
+            title="Login"
+            onPress={handleLogin}
+            disabled={!email || !password || hasEmailError || hasPasswordError}
+          />
+
+          <View style={styles.forgotPasswordContainer}>
+            <Pressable onPress={() => navigation.navigate('ForgotPassword')}>
+              <Text style={styles.forgotPasswordLink}>Forgot Password?</Text>
+            </Pressable>
+          </View>
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>New to application?</Text>
-            <Pressable onPress={() => navigation.navigate('Register')}>
+            <Pressable onPress={() => navigation.navigate('EmailVerification')}>
               <Text style={styles.link}> Register</Text>
             </Pressable>
           </View>

@@ -2,7 +2,10 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
 import LoginScreen from '../screens/Login';
-import RegisterScreen from '../screens/Register';
+import EmailVerificationScreen from '../screens/EmailVerification';
+import CompleteRegistrationScreen from '../screens/CompleteRegistration';
+import ForgotPasswordScreen from '../screens/ForgotPassword';
+import ResetPasswordScreen from '../screens/ResetPassword';
 import LeadDetailsScreen from '../screens/LeadDetails';
 import {useSelector} from 'react-redux';
 import {RootState} from '../store';
@@ -56,6 +59,16 @@ const AppNavigator = () => {
             }}
           />
           <Stack.Screen
+            name="ResetPassword"
+            component={ResetPasswordScreen}
+            options={{
+              headerTitle: headerTitle,
+              headerTitleAlign: 'center',
+              headerShown: true,
+              headerBackButtonDisplayMode: 'minimal',
+            }}
+          />
+          <Stack.Screen
             name="WebViewScreen"
             component={WebViewScreen}
             options={({route}: any) => ({title: route.params?.title})}
@@ -74,8 +87,28 @@ const AppNavigator = () => {
             }}
           />
           <Stack.Screen
-            name="Register"
-            component={RegisterScreen}
+            name="EmailVerification"
+            component={EmailVerificationScreen}
+            options={{
+              headerTitle: headerTitle,
+              headerTitleAlign: 'center',
+              headerShown: true,
+              headerBackButtonDisplayMode: 'minimal',
+            }}
+          />
+          <Stack.Screen
+            name="CompleteRegistration"
+            component={CompleteRegistrationScreen}
+            options={{
+              headerTitle: headerTitle,
+              headerTitleAlign: 'center',
+              headerShown: true,
+              headerBackButtonDisplayMode: 'minimal',
+            }}
+          />
+          <Stack.Screen
+            name="ForgotPassword"
+            component={ForgotPasswordScreen}
             options={{
               headerTitle: headerTitle,
               headerTitleAlign: 'center',

@@ -1,6 +1,5 @@
-
-import React, {  useState } from 'react';
-import { TextInput, View } from 'react-native';
+import React, {useState} from 'react';
+import {TextInput, View} from 'react-native';
 import styles from './styles';
 import Text from '../Text';
 
@@ -13,6 +12,8 @@ interface Props {
   required?: boolean;
   style?: object;
   containerStyle?: object;
+  error?: string | null;
+  onValidationChange?: (hasError: boolean) => void;
 }
 
 const FormInput: React.FC<Props> = ({
@@ -24,10 +25,16 @@ const FormInput: React.FC<Props> = ({
   required = false,
   style,
   containerStyle,
+  error: externalError,
+  onValidationChange,
 }) => {
-  const [error, setError] = useState<string | null>(null);
+  const [internalError, setInternalError] = useState<string | null>(null);
 
-  const handleInputChange = (text:string) => {
+  // Use external error if provided, otherwise use internal error
+  const displayError =
+    externalError !== undefined ? externalError : internalError;
+
+  const handleInputChange = (text: string) => {
     let formattedText = text;
 
     if (inputType === 'phoneNumber' || inputType === 'numeric') {
@@ -38,36 +45,41 @@ const FormInput: React.FC<Props> = ({
   };
 
   const validate = (text: string) => {
-    if (required && !text) {
-      setError('This field is required');
+    // Only validate internally if no external error is provided
+    if (externalError !== undefined) {
       return;
     }
 
-    if (inputType === 'email' && text) {
+    let hasError = false;
+
+    if (required && !text) {
+      setInternalError('This field is required');
+      hasError = true;
+    } else if (inputType === 'email' && text) {
       const emailRegex = /^\S+@\S+\.\S+$/;
       if (!emailRegex.test(text)) {
-        setError('Invalid email format');
-        return;
+        setInternalError('Invalid email format');
+        hasError = true;
       }
-    }
-
-    if (inputType === 'phoneNumber' && text) {
+    } else if (inputType === 'phoneNumber' && text) {
       const cleaned = text.replace(/\D/g, '');
       if (cleaned.length !== 10) {
-        setError('Phone number must be 10 digits');
-        return;
+        setInternalError('Phone number must be 10 digits');
+        hasError = true;
       }
-    }
-
-    if (inputType === 'password' && text) {
+    } else if (inputType === 'password' && text) {
       if (text.length < 6) {
-        setError('Password must be at least 6 characters');
-        return;
+        setInternalError('Password must be at least 6 characters');
+        hasError = true;
       }
-      // Optional: add more checks for strength
     }
 
-    setError(null);
+    if (!hasError) {
+      setInternalError(null);
+    }
+
+    // Notify parent component about validation state
+    onValidationChange?.(hasError);
   };
 
   const keyboardType =
@@ -78,11 +90,11 @@ const FormInput: React.FC<Props> = ({
       : 'default';
 
   return (
-    <View style={[styles.container,containerStyle]}>
+    <View style={[styles.container, containerStyle]}>
       {label && <Text style={styles.label}>{label}</Text>}
 
       <TextInput
-        style={[styles.input, style, !!error && styles.errorInput]}
+        style={[styles.input, style, !!displayError && styles.errorInput]}
         placeholder={placeholder}
         value={value}
         onChangeText={handleInputChange}
@@ -91,7 +103,7 @@ const FormInput: React.FC<Props> = ({
         keyboardType={keyboardType}
       />
 
-      {!!error && <Text style={styles.errorText}>{error}</Text>}
+      {!!displayError && <Text style={styles.errorText}>{displayError}</Text>}
     </View>
   );
 };

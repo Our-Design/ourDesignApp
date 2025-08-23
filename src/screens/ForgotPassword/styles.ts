@@ -18,21 +18,20 @@ export default StyleSheet.create({
     fontSize: FontSize.lg,
     fontWeight: 'bold',
     color: Colors.heading,
-    marginBottom: Spacing.lg,
+    marginBottom: Spacing.sm,
+    textAlign: 'center',
   },
-  forgotPasswordContainer: {
-    alignItems: 'center',
-    marginTop: Spacing.md,
-  },
-  forgotPasswordLink: {
-    color: Colors.primary,
+  subtitle: {
     fontSize: FontSize.sm,
-    fontWeight: '500',
+    color: Colors.subText,
+    marginBottom: Spacing.lg,
+    textAlign: 'center',
+    lineHeight: 20,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: Spacing.lg,
+    marginTop: Spacing.md,
   },
   footerText: {
     color: Colors.subText,

@@ -69,6 +69,10 @@ export default StyleSheet.create({
     marginTop: Spacing.xl,
     backgroundColor: Colors.soft,
   },
+  resetPasswordBtn: {
+    marginTop: Spacing.lg,
+    backgroundColor: Colors.primary,
+  },
   logoutText: {
     color: Colors.heading,
   },

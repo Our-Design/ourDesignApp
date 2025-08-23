@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect} from 'react';
+import React from 'react';
 import {FlatList, View, TouchableOpacity, Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store';
@@ -11,14 +10,13 @@ import {
 } from '../../store/slices/leadsSlice';
 import styles from './styles';
 import LeadCard from '../../components/LeadCard';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LeadSearchFilterBar from '../../components/LeadSearchFilteraBar';
 import CustomStatusBar from '../../components/CustomStatusBar';
 import {Colors} from '../../styles/vars';
 import Text from '../../components/Text';
 import Icons from '../../constants/icons';
-import {useOnAppResume} from '../../hooks/useOnAppResume';
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,13 +25,11 @@ const Home = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const filters = useSelector((state: RootState) => state.leads.filters);
 
-  useEffect(() => {
-    dispatch(fetchAllLeads());
-  }, []);
-
-  useOnAppResume(() => {
-    dispatch(fetchAllLeads());
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(fetchAllLeads());
+    }, [dispatch]),
+  );
 
   const handleLeadPress = (lead: any) => {
     dispatch(setSelectedLead(lead));

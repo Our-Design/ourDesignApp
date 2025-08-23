@@ -11,6 +11,7 @@ const apiClient = axios.create({
 // OPTIONAL: Add interceptor to include token in headers
 apiClient.interceptors.request.use(
   async config => {
+    console.log('request', config);
     const token = await AsyncStorage.getItem('token'); // Replace with token from Redux or localStorage
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -23,9 +24,11 @@ apiClient.interceptors.request.use(
 // OPTIONAL: Add global error handling
 apiClient.interceptors.response.use(
   response => {
+    console.log('response', response);
     return response;
   },
   async error => {
+    console.log('error', error);
     if (error?.response?.status === 401) {
       await handleLogout();
     }

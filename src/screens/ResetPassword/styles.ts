@@ -11,6 +11,11 @@ export default StyleSheet.create({
     padding: Spacing.lg,
     justifyContent: 'center',
   },
+  scrollContainer: {
+    flexGrow: 1,
+    padding: 20,
+    justifyContent: 'center',
+  },
   card: {
     marginBottom: Spacing.xl,
   },
@@ -18,24 +23,26 @@ export default StyleSheet.create({
     fontSize: FontSize.lg,
     fontWeight: 'bold',
     color: Colors.heading,
-    marginBottom: Spacing.lg,
+    marginBottom: Spacing.sm,
+    textAlign: 'center',
   },
-  forgotPasswordContainer: {
-    alignItems: 'center',
-    marginTop: Spacing.md,
-  },
-  forgotPasswordLink: {
-    color: Colors.primary,
+  subtitle: {
     fontSize: FontSize.sm,
-    fontWeight: '500',
+    color: Colors.subText,
+    marginBottom: Spacing.lg,
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    marginTop: 20,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: Spacing.lg,
-  },
-  footerText: {
-    color: Colors.subText,
+    marginTop: Spacing.md,
   },
   link: {
     color: Colors.primary,

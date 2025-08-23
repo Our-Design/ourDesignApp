@@ -14,4 +14,10 @@ export default StyleSheet.create({
     fontSize: FontSize.md,
     fontWeight: '600',
   },
+  disabledButton: {
+    backgroundColor: Colors.muted,
+  },
+  disabledText: {
+    color: Colors.subText,
+  },
 });

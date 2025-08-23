@@ -7,7 +7,9 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    resizeMode: 'center',
+  },
+  scrollContainer: {
+    flexGrow: 1,
     padding: Spacing.lg,
     justifyContent: 'center',
   },
@@ -18,27 +20,40 @@ export default StyleSheet.create({
     fontSize: FontSize.lg,
     fontWeight: 'bold',
     color: Colors.heading,
+    marginBottom: Spacing.sm,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: FontSize.sm,
+    color: Colors.success,
+    marginBottom: Spacing.lg,
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  otpContainer: {
     marginBottom: Spacing.lg,
   },
-  forgotPasswordContainer: {
-    alignItems: 'center',
-    marginTop: Spacing.md,
-  },
-  forgotPasswordLink: {
-    color: Colors.primary,
-    fontSize: FontSize.sm,
+  otpLabel: {
+    fontSize: FontSize.md,
+    color: Colors.text,
+    marginBottom: Spacing.sm,
     fontWeight: '500',
+  },
+  disabledInput: {
+    backgroundColor: Colors.muted,
+    color: Colors.subText,
+  },
+  disabledContainer: {
+    opacity: 0.7,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: Spacing.lg,
   },
-  footerText: {
-    color: Colors.subText,
-  },
   link: {
     color: Colors.primary,
     fontWeight: '600',
+    textAlign: 'center',
   },
 });

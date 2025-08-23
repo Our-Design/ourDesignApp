@@ -7,6 +7,7 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
+    resizeMode: 'center',
     padding: Spacing.lg,
     justifyContent: 'center',
   },
@@ -17,7 +18,15 @@ export default StyleSheet.create({
     fontSize: FontSize.lg,
     fontWeight: 'bold',
     color: Colors.heading,
+    marginBottom: Spacing.sm,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: FontSize.sm,
+    color: Colors.subText,
     marginBottom: Spacing.lg,
+    textAlign: 'center',
+    lineHeight: 20,
   },
   footer: {
     flexDirection: 'row',
