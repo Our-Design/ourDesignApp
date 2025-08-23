@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Colors, Spacing} from '../../styles/vars';
+import {Colors, Spacing, FontSize, Radius} from '../../styles/vars';
 
 export default StyleSheet.create({
   container: {
@@ -10,18 +10,30 @@ export default StyleSheet.create({
   link: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderColor: '#eee',
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.md,
+    marginBottom: Spacing.sm,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.card,
+    // Add shadow
+    shadowColor: Colors.shadow,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    // Add subtle border
+    borderWidth: 1,
+    borderColor: Colors.cardBorder,
   },
-
   linkText: {
-    fontSize: 16,
-    color: '#333',
+    fontSize: FontSize.md,
+    color: Colors.text,
+    fontWeight: '500',
   },
-
   icon: {
-    marginRight: 12,
+    marginRight: Spacing.sm,
   },
-  list: {},
+  list: {
+    paddingBottom: Spacing.xl,
+  },
 });

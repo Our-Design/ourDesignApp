@@ -12,6 +12,16 @@ export default StyleSheet.create({
     padding: Spacing.lg,
     borderRadius: Radius.lg,
     backgroundColor: Colors.card,
+    // Enhanced shadow for iOS
+    shadowColor: Colors.shadow,
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    // Enhanced elevation for Android
+    elevation: 8,
+    // Add subtle border
+    borderWidth: 1,
+    borderColor: Colors.cardBorder,
   },
   header: {
     flexDirection: 'row',
@@ -22,15 +32,21 @@ export default StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: Colors.soft,
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: Spacing.md,
+    // Add shadow
+    shadowColor: Colors.primary,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
   },
   avatarText: {
     fontSize: FontSize.lg,
     fontWeight: '600',
-    color: Colors.heading,
+    color: Colors.background,
   },
   name: {
     fontSize: FontSize.lg,
@@ -67,14 +83,27 @@ export default StyleSheet.create({
   },
   logoutBtn: {
     marginTop: Spacing.xl,
-    backgroundColor: Colors.soft,
+    backgroundColor: Colors.buttonDangerMuted,
+    // Add shadow
+    shadowColor: Colors.buttonDangerMuted,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
   },
   resetPasswordBtn: {
     marginTop: Spacing.lg,
     backgroundColor: Colors.primary,
+    // Add shadow
+    shadowColor: Colors.primary,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
   },
   logoutText: {
-    color: Colors.heading,
+    color: Colors.background,
+    fontWeight: '600',
   },
   emptyText: {
     fontSize: FontSize.md,
@@ -95,8 +124,8 @@ export default StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 70,
-    backgroundColor: Colors.soft,
-    opacity: 0.35,
+    backgroundColor: Colors.buttonPrimary,
+    opacity: 0.1,
     zIndex: 1,
   },
 
@@ -107,8 +136,8 @@ export default StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 70,
-    backgroundColor: Colors.soft,
-    opacity: 0.35,
+    backgroundColor: Colors.buttonSecondary,
+    opacity: 0.1,
     zIndex: 1,
   },
 });

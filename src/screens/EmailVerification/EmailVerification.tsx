@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
   Pressable,
+  ScrollView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -47,35 +48,40 @@ const EmailVerificationScreen = () => {
       <KeyboardAvoidingView
         behavior={isIOS ? 'padding' : undefined}
         style={styles.container}>
-        <ShadowCard style={styles.card}>
-          <Text style={styles.title}>Register</Text>
-          <Text style={styles.subtitle}>
-            We'll send you a verification code to your email address
-          </Text>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled">
+          <ShadowCard style={styles.card}>
+            <Text style={styles.title}>Register</Text>
+            <Text style={styles.subtitle}>
+              We'll send you a verification code to your email address
+            </Text>
 
-          <FormInput
-            label="Email Address"
-            placeholder="Enter your email address"
-            value={email}
-            onChangeText={setEmail}
-            inputType="email"
-            required
-            onValidationChange={setHasEmailError}
-          />
+            <FormInput
+              label="Email Address"
+              placeholder="Enter your email address"
+              value={email}
+              onChangeText={setEmail}
+              inputType="email"
+              required
+              onValidationChange={setHasEmailError}
+            />
 
-          <PrimaryButton
-            title={loading ? 'Sending OTP...' : 'Send OTP'}
-            onPress={handleSendOTP}
-            disabled={loading || !email || hasEmailError}
-          />
+            <PrimaryButton
+              title={loading ? 'Sending OTP...' : 'Send OTP'}
+              onPress={handleSendOTP}
+              disabled={loading || !email || hasEmailError}
+            />
 
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>Already have an account?</Text>
-            <Pressable onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.link}> Login</Text>
-            </Pressable>
-          </View>
-        </ShadowCard>
+            <View style={styles.footer}>
+              <Text style={styles.footerText}>Already have an account?</Text>
+              <Pressable onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.link}> Login</Text>
+              </Pressable>
+            </View>
+          </ShadowCard>
+        </ScrollView>
       </KeyboardAvoidingView>
     </ImageBackground>
   );

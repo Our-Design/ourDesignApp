@@ -166,7 +166,9 @@ const LeadSearchFilterBar: React.FC<Props> = ({
           <Text style={styles.label}>Status:</Text>
           {Object.keys(status).map(key => (
             <View key={key} style={styles.statusRow}>
-              <Text style={styles.sortLabel}>{key.toUpperCase()}</Text>
+              <Text style={styles.sortLabel}>
+                {key === 'sold' ? 'UNAVAILABLE' : key.toUpperCase()}
+              </Text>
               <Switch
                 value={status[key]}
                 onValueChange={val =>

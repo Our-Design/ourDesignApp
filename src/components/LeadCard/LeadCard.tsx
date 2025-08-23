@@ -14,8 +14,9 @@ interface Props {
 const LeadCard: React.FC<Props> = ({lead, onPress}) => {
   const newLead = lead.status === 'new';
   const myLead = lead.customerMobile;
-  const statusColor = newLead || myLead ? Colors.primary : Colors.soft;
-  const textColor = newLead || myLead ? Colors.background : Colors.subText;
+  const statusColor =
+    newLead || myLead ? Colors.primary : Colors.buttonDangerMuted;
+  const textColor = newLead || myLead ? Colors.background : Colors.background;
 
   return (
     <View style={styles.cardContainer}>
@@ -51,7 +52,11 @@ const LeadCard: React.FC<Props> = ({lead, onPress}) => {
           style={[styles.button, {backgroundColor: statusColor}]}
           onPress={onPress}>
           <Text style={[styles.buttonText, {color: textColor}]}>
-            {myLead ? 'View Details' : lead.status}
+            {myLead
+              ? 'View Details'
+              : lead.status === 'sold'
+              ? 'Unavailable'
+              : lead.status}
           </Text>
         </Pressable>
       </View>

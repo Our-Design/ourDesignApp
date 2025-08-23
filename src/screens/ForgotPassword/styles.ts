@@ -11,6 +11,10 @@ export default StyleSheet.create({
     padding: Spacing.lg,
     justifyContent: 'center',
   },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
   card: {
     marginBottom: Spacing.xl,
   },

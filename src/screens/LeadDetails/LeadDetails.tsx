@@ -76,7 +76,7 @@ const LeadDetails = () => {
 
       // 2. Razorpay Checkout options
       const options = {
-        description: 'Buy this lead',
+        description: 'Access this lead contact',
         image: '../../assets/images/ourLogo.png',
         currency: order.currency,
         key: RAZORPAY_KEY_ID,
@@ -100,7 +100,7 @@ const LeadDetails = () => {
         .then(() => {
           Alert.alert(
             'Success',
-            'Payment successful. If purchased lead is not visible you can contact support team',
+            'Access granted successfully. If contact details are not visible you can contact support team',
             [
               {
                 text: 'My Leads',
@@ -116,7 +116,7 @@ const LeadDetails = () => {
         .catch(error => {
           const {description} = error?.error;
           Alert.alert(
-            'Payment Failed',
+            'Access Failed',
             description && description !== 'undefined'
               ? description
               : 'Something went wrong.',
@@ -124,7 +124,7 @@ const LeadDetails = () => {
         });
     } catch (err: any) {
       dispatch(setLoading(false));
-      dispatch(setError(err.message || 'Failed to initiate payment'));
+      dispatch(setError(err.message || 'Failed to initiate access'));
     }
   };
 
@@ -133,110 +133,128 @@ const LeadDetails = () => {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.content}>
-        <Text style={styles.title}>{lead.propertyType}</Text>
+        {/* Header Card */}
+        <View style={styles.headerCard}>
+          <Text style={styles.title}>{lead.propertyType}</Text>
 
-        <View style={styles.locationRow}>
-          <Ionicons name="location-outline" size={16} color={Colors.accent} />
-          <Text style={styles.locationText}>
-            {getFullAddress(lead.address)}
-          </Text>
+          <View style={styles.locationRow}>
+            <Ionicons name="location-outline" size={16} color={Colors.accent} />
+            <Text style={styles.locationText}>
+              {getFullAddress(lead.address)}
+            </Text>
+          </View>
+
+          {lead.isVerified && (
+            <Text style={styles.verified}>✅ Verified Lead</Text>
+          )}
         </View>
 
-        {lead.isVerified && (
-          <Text style={styles.verified}>✅ Verified Lead</Text>
-        )}
+        {/* Info Card */}
+        <View style={styles.infoCard}>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Budget:</Text>
+            <Text style={styles.value}>₹ {lead.budget}</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Size:</Text>
+            <Text style={styles.value}>{lead.propertySize} sqft</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Posted on:</Text>
+            <Text style={styles.value}>{createdDate}</Text>
+          </View>
+        </View>
 
-        <Text style={styles.label}>
-          Budget: <Text style={styles.value}>₹ {lead.budget}</Text>
-        </Text>
-        <Text style={styles.label}>
-          Size: <Text style={styles.value}>{lead.propertySize} sqft</Text>
-        </Text>
-        <Text style={styles.label}>
-          Posted on: <Text style={styles.value}>{createdDate}</Text>
-        </Text>
-
+        {/* Description Card */}
         {lead.description && (
-          <>
+          <View style={styles.infoCard}>
             <Text style={styles.sectionHeading}>DESCRIPTION</Text>
             <Text style={styles.description}>{lead.description}</Text>
-          </>
+          </View>
         )}
 
-        <View style={styles.divider} />
-        <Text style={styles.label}>Owner Details:</Text>
-        <View style={styles.ownerRow}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>
-              {lead.customerName?.charAt(0).toUpperCase() || 'A'}
-            </Text>
+        {/* Owner Card */}
+        <View style={styles.ownerCard}>
+          <Text style={styles.contactLabel}>Owner Details:</Text>
+          <View style={styles.ownerRow}>
+            <View style={styles.avatar}>
+              <Text style={styles.avatarText}>
+                {lead.customerName?.charAt(0).toUpperCase() || 'A'}
+              </Text>
+            </View>
+            <View style={styles.ownerDetails}>
+              <Text style={styles.ownerName}>
+                {fromMyLeads ? lead.customerName : '*********'}
+              </Text>
+              <Text style={styles.ownerContact}>
+                {fromMyLeads ? lead.customerMobile : '**********'}
+              </Text>
+            </View>
           </View>
-          <View style={styles.ownerDetails}>
-            <Text style={styles.ownerName}>
-              {fromMyLeads ? lead.customerName : '*********'}
-            </Text>
-            <Text style={styles.ownerContact}>
-              {fromMyLeads ? lead.customerMobile : '**********'}
-            </Text>
-          </View>
-        </View>
 
-        <Text style={styles.label}>Contact owner:</Text>
-        <View style={styles.contactRow}>
-          <Pressable
-            style={[
-              styles.contactIcon,
-              !fromMyLeads && {backgroundColor: Colors.muted},
-            ]}
-            onPress={fromMyLeads ? handleWhatsApp : undefined}
-            disabled={!fromMyLeads}>
-            <Ionicons
-              name="logo-whatsapp"
-              size={20}
-              color={fromMyLeads ? Colors.background : Colors.subText}
-            />
-          </Pressable>
-          <Pressable
-            style={[
-              styles.contactIcon,
-              !fromMyLeads && {backgroundColor: Colors.muted},
-            ]}
-            onPress={fromMyLeads ? handleSMS : undefined}
-            disabled={!fromMyLeads}>
-            <Ionicons
-              name="chatbubble-ellipses-outline"
-              size={20}
-              color={fromMyLeads ? Colors.background : Colors.subText}
-            />
-          </Pressable>
-          <Pressable
-            style={[
-              styles.contactIcon,
-              !fromMyLeads && {backgroundColor: Colors.muted},
-            ]}
-            onPress={fromMyLeads ? handleCall : undefined}
-            disabled={!fromMyLeads}>
-            <Ionicons
-              name="call-outline"
-              size={20}
-              color={fromMyLeads ? Colors.background : Colors.subText}
-            />
-          </Pressable>
+          <View style={styles.divider} />
+
+          <Text style={styles.contactLabel}>Contact owner:</Text>
+          <View style={styles.contactRow}>
+            <Pressable
+              style={[
+                styles.contactIcon,
+                !fromMyLeads && {backgroundColor: Colors.muted},
+              ]}
+              onPress={fromMyLeads ? handleWhatsApp : undefined}
+              disabled={!fromMyLeads}>
+              <Ionicons
+                name="logo-whatsapp"
+                size={22}
+                color={fromMyLeads ? Colors.background : Colors.subText}
+              />
+            </Pressable>
+            <Pressable
+              style={[
+                styles.contactIcon,
+                !fromMyLeads && {backgroundColor: Colors.muted},
+              ]}
+              onPress={fromMyLeads ? handleSMS : undefined}
+              disabled={!fromMyLeads}>
+              <Ionicons
+                name="chatbubble-ellipses-outline"
+                size={22}
+                color={fromMyLeads ? Colors.background : Colors.subText}
+              />
+            </Pressable>
+            <Pressable
+              style={[
+                styles.contactIcon,
+                !fromMyLeads && {backgroundColor: Colors.muted},
+              ]}
+              onPress={fromMyLeads ? handleCall : undefined}
+              disabled={!fromMyLeads}>
+              <Ionicons
+                name="call-outline"
+                size={22}
+                color={fromMyLeads ? Colors.background : Colors.subText}
+              />
+            </Pressable>
+          </View>
         </View>
       </ScrollView>
 
       {!fromMyLeads && (
         <View style={styles.footer}>
           {lead.status === 'new' ? (
-            <Pressable style={styles.buyButton} onPress={handleBuyNow}>
-              <Text style={styles.buyButtonText}>Buy Lead</Text>
+            <Pressable style={styles.accessButton} onPress={handleBuyNow}>
+              <Text style={styles.accessButtonText}>Access Contact</Text>
             </Pressable>
           ) : (
             <Pressable
-              style={[styles.buyButton, {backgroundColor: Colors.soft}]}
+              style={[
+                styles.accessButton,
+                {backgroundColor: Colors.buttonDangerMuted},
+              ]}
               disabled>
-              <Text style={[styles.buyButtonText, {color: Colors.subText}]}>
-                Sold
+              <Text
+                style={[styles.accessButtonText, {color: Colors.background}]}>
+                Unavailable
               </Text>
             </Pressable>
           )}

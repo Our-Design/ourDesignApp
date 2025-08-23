@@ -6,6 +6,8 @@ export const Colors = {
 
   // Brand
   primary: '#011640', // --primary
+  primaryLight: '#1a2a5c', // Lighter shade of primary
+  primaryGradient: '#004b87', // For gradients
   secondary: '#FFF7F0', // --secondary
   accent: '#848484', // --accent
 
@@ -21,6 +23,20 @@ export const Colors = {
   error: '#FF3B30',
   success: '#28a745',
   warning: '#ffc107',
+
+  // New vibrant colors for buttons and cards
+  buttonPrimary: '#007AFF', // iOS blue - vibrant primary button
+  buttonSecondary: '#5856D6', // Purple - secondary actions
+  buttonSuccess: '#34C759', // Green - success/positive actions
+  buttonWarning: '#FF9500', // Orange - warning actions
+  buttonDanger: '#FF3B30', // Red - destructive actions
+  buttonDangerMuted: '#DC3545', // Less vibrant red for logout/unavailable
+
+  // Card accents
+  cardAccent: '#F2F2F7', // Light gray for card backgrounds
+  cardBorder: '#E5E5EA', // Subtle borders  // Gradients
+  gradientStart: '#007AFF',
+  gradientEnd: '#5856D6',
 
   // Optional new semantic names
   headerBackground: '#FFF7F1', // use secondary for light warm headers
