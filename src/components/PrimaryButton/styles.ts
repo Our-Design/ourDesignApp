@@ -3,7 +3,7 @@ import {Radius, Spacing, Colors, FontSize} from '../../styles/vars';
 
 export default StyleSheet.create({
   button: {
-    backgroundColor: Colors.buttonPrimary,
+    backgroundColor: Colors.primary,
     paddingVertical: Spacing.md,
     borderRadius: Radius.md,
     alignItems: 'center',

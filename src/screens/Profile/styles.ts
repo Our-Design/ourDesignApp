@@ -5,8 +5,17 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  scrollContent: {
+    flexGrow: 1,
     padding: Spacing.lg,
     paddingBottom: 100,
+  },
+  emptyContent: {
+    flexGrow: 1,
+    padding: Spacing.lg,
+    paddingBottom: 100,
+    justifyContent: 'center',
   },
   card: {
     padding: Spacing.lg,
@@ -82,7 +91,7 @@ export default StyleSheet.create({
     fontWeight: '500',
   },
   logoutBtn: {
-    marginTop: Spacing.xl,
+    marginTop: Spacing.lg,
     backgroundColor: Colors.buttonDangerMuted,
     // Add shadow
     shadowColor: Colors.buttonDangerMuted,
@@ -96,6 +105,16 @@ export default StyleSheet.create({
     backgroundColor: Colors.primary,
     // Add shadow
     shadowColor: Colors.primary,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  deleteAccountBtn: {
+    marginTop: Spacing.lg,
+    backgroundColor: Colors.buttonDanger,
+    // Add shadow
+    shadowColor: Colors.buttonDanger,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.3,
     shadowRadius: 4,
@@ -116,6 +135,7 @@ export default StyleSheet.create({
     position: 'relative',
     overflow: 'hidden',
     padding: 2,
+    marginBottom: Spacing.xl,
   },
   bgCircleOne: {
     position: 'absolute',

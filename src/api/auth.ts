@@ -84,3 +84,16 @@ export const resetPassword = async (
     throw new Error(message);
   }
 };
+
+export const deleteAccount = async () => {
+  try {
+    const response = await apiClient.delete('/auth/delete-me');
+    return response.data;
+  } catch (err: any) {
+    const message =
+      err?.response?.data?.message ||
+      err?.message ||
+      'Failed to delete account';
+    throw new Error(message);
+  }
+};

@@ -1,11 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  KeyboardAvoidingView,
-  ImageBackground,
-  Pressable,
-  ScrollView,
-} from 'react-native';
+import {KeyboardAvoidingView, ImageBackground, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {resetPassword, logout} from '../../store/slices/authSlice';
@@ -134,12 +128,6 @@ const ResetPasswordScreen = () => {
               onPress={handleResetPassword}
               disabled={loading || !isFormValid}
             />
-
-            <View style={styles.footer}>
-              <Pressable onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.link}>Back to Login</Text>
-              </Pressable>
-            </View>
           </ShadowCard>
         </ScrollView>
       </KeyboardAvoidingView>

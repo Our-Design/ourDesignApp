@@ -1,8 +1,11 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Alert, ScrollView, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {logout} from '../../store/slices/authSlice';
+import {
+  logout,
+  deleteAccount as deleteAccountThunk,
+} from '../../store/slices/authSlice';
 import {AppDispatch, RootState} from '../../store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Text from '../../components/Text';
@@ -15,6 +18,7 @@ const Profile = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation<any>();
   const user = useSelector((state: RootState) => state.auth.user);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleLogout = () => dispatch(logout());
 
@@ -22,21 +26,57 @@ const Profile = () => {
     navigation.navigate('ResetPassword');
   };
 
+  const handleConfirmDelete = useCallback(async () => {
+    try {
+      setIsDeleting(true);
+      const response = await dispatch(deleteAccountThunk()).unwrap();
+      await dispatch(logout());
+      navigation.navigate('Login');
+      Alert.alert(
+        'Account deleted',
+        response?.message ||
+          'Your account has been deleted successfully. We hope to see you again!',
+      );
+    } catch (error: any) {
+    } finally {
+      setIsDeleting(false);
+    }
+  }, [dispatch, navigation]);
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Delete account?',
+      'This action will permanently delete your account and associated data. This cannot be undone.',
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {text: 'Delete', style: 'destructive', onPress: handleConfirmDelete},
+      ],
+    );
+  };
+
   if (!user) {
     return (
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.emptyContent}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}>
         <Text style={styles.emptyText}>User not logged in</Text>
         <PrimaryButton
           title="Logout"
           onPress={handleLogout}
           style={styles.logoutBtn}
         />
-      </View>
+      </ScrollView>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}>
       <View style={styles.flexStyle}>
         <View style={styles.bgCircleOne} />
         <View style={styles.bgCircleTwo} />
@@ -91,18 +131,24 @@ const Profile = () => {
       </View>
 
       <PrimaryButton
+        title={isDeleting ? 'Deleting...' : 'Delete Account'}
+        onPress={handleDeleteAccount}
+        style={styles.logoutBtn}
+        disabled={isDeleting}
+      />
+
+      <PrimaryButton
         title="Reset Password"
         onPress={handleResetPassword}
         style={styles.resetPasswordBtn}
       />
-
       <PrimaryButton
         title="Logout"
         onPress={handleLogout}
         style={styles.logoutBtn}
         textStyle={styles.logoutText}
       />
-    </View>
+    </ScrollView>
   );
 };
 

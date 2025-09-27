@@ -7,6 +7,7 @@ import {
   resendOTP as resendOTPAPI,
   forgotPassword as forgotPasswordAPI,
   resetPassword as resetPasswordAPI,
+  deleteAccount as deleteAccountAPI,
 } from '../../api/auth';
 import {setLoading, setError, setSuccess} from './uiSlice';
 
@@ -176,6 +177,30 @@ export const resetPassword = createAsyncThunk(
   },
 );
 
+export const deleteAccount = createAsyncThunk(
+  'auth/deleteAccount',
+  async (_: void, {dispatch}) => {
+    try {
+      dispatch(setLoading(true));
+      const data = await deleteAccountAPI();
+      await AsyncStorage.multiRemove(['token', 'user']);
+      dispatch(
+        setSuccess(
+          data?.message ||
+            'Account deleted successfully. Hope to see you again!',
+        ),
+      );
+      return data;
+    } catch (err: any) {
+      const message = err?.message || 'Failed to delete account';
+      dispatch(setError(message));
+      throw err;
+    } finally {
+      dispatch(setLoading(false));
+    }
+  },
+);
+
 export const logout = createAsyncThunk('auth/logout', async () => {
   await AsyncStorage.removeItem('token');
   await AsyncStorage.removeItem('user');
@@ -237,6 +262,14 @@ const authSlice = createSlice({
         state.resetPasswordStep = 'complete';
         state.otpSent = false;
         state.tempEmail = null;
+      })
+      .addCase(deleteAccount.fulfilled, state => {
+        state.token = null;
+        state.user = null;
+        state.tempEmail = null;
+        state.otpSent = false;
+        state.registrationStep = 'email';
+        state.resetPasswordStep = 'email';
       });
   },
 });

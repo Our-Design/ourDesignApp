@@ -9,7 +9,7 @@ import Text from '../../components/Text';
 import RazorpayCheckout from 'react-native-razorpay';
 import {RAZORPAY_KEY_ID} from 'react-native-dotenv';
 import {useNavigation} from '@react-navigation/native';
-import {createOrderAPI} from '../../api/payments';
+import {createOrderAPI, verifyPaymentAPI} from '../../api/payments';
 import {setError, setLoading} from '../../store/slices/uiSlice';
 
 const LeadDetails = () => {
@@ -97,26 +97,48 @@ const LeadDetails = () => {
 
       // 3. Open Razorpay modal
       RazorpayCheckout.open(options as any)
-        .then(() => {
-          Alert.alert(
-            'Success',
-            'Access granted successfully. If contact details are not visible you can contact support team',
-            [
-              {
-                text: 'My Leads',
-                onPress: () => {
-                  navigation.navigate('Main', {
-                    screen: 'MyLeads',
-                  });
+        .then(async data => {
+          dispatch(setLoading(true));
+          try {
+            // Verify payment with backend before showing success
+            await verifyPaymentAPI({
+              razorpay_order_id: data.razorpay_order_id,
+              razorpay_payment_id: data.razorpay_payment_id,
+              razorpay_signature: data.razorpay_signature,
+              leadId: lead._id,
+              designerId: user?._id || '',
+            });
+
+            dispatch(setLoading(false));
+
+            Alert.alert(
+              'Success',
+              'Access granted successfully. If contact details are not visible you can contact support team',
+              [
+                {
+                  text: 'My Leads',
+                  onPress: () => {
+                    navigation.navigate('Main', {
+                      screen: 'MyLeads',
+                    });
+                  },
                 },
-              },
-            ],
-          );
+              ],
+            );
+          } catch (verifyError: any) {
+            dispatch(setLoading(false));
+            Alert.alert(
+              'Verification Failed',
+              verifyError.message ||
+                'Payment verification failed. Please contact support.',
+            );
+          }
         })
         .catch(error => {
+          dispatch(setLoading(false));
           const {description} = error?.error;
           Alert.alert(
-            'Access Failed',
+            'Payment Failed',
             description && description !== 'undefined'
               ? description
               : 'Something went wrong.',

@@ -45,6 +45,7 @@ const MyLeads = () => {
           </View>
         }
         contentContainerStyle={styles.list}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
