@@ -15,6 +15,7 @@ import {Image, View} from 'react-native';
 import Icons from '../constants/icons';
 import Text from '../components/Text';
 import styles from './styles';
+import {isIOS} from '../utils/platformHelper';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,7 +72,10 @@ const AppNavigator = () => {
           <Stack.Screen
             name="WebViewScreen"
             component={WebViewScreen}
-            options={({route}: any) => ({title: route.params?.title})}
+            options={({route}: any) => ({
+              title: route.params?.title,
+              headerShown: isIOS ? true : false,
+            })}
           />
         </>
       ) : (

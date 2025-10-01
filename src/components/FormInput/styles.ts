@@ -5,6 +5,9 @@ export default StyleSheet.create({
   container: {
     marginBottom: Spacing.md,
   },
+  inputWrapper: {
+    position: 'relative',
+  },
   label: {
     fontSize: FontSize.sm,
     fontWeight: FontWeight.medium as any,
@@ -19,6 +22,9 @@ export default StyleSheet.create({
     fontSize: FontSize.md,
     color: Colors.text,
   },
+  passwordInput: {
+    paddingRight: Spacing.xl * 1.5,
+  },
   errorInput: {
     borderColor: Colors.error,
   },
@@ -26,5 +32,18 @@ export default StyleSheet.create({
     color: Colors.error,
     fontSize: FontSize.xs,
     marginTop: Spacing.xs,
+  },
+  passwordToggle: {
+    position: 'absolute',
+    right: Spacing.sm,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    paddingHorizontal: Spacing.xs,
+  },
+  passwordToggleText: {
+    color: Colors.primary,
+    fontSize: FontSize.sm,
+    fontWeight: FontWeight.medium as any,
   },
 });

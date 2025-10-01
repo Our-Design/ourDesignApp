@@ -5,14 +5,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setToken, setUser} from './store/slices/authSlice';
 import AppNavigator from './navigation/AppNavigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {View} from 'react-native';
+import {Alert, Linking, View} from 'react-native';
 import {FontSize, Spacing} from './styles/vars';
 import {isAndroid} from './utils/platformHelper';
 import AppStateListener from './components/AppStateListener/AppStateListener';
+import {useUpdateCheck} from './hooks/useUpdateCheck';
 
 export default function AppProvider() {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
+  const {storeUpdateInfo, showStoreModal} = useUpdateCheck();
 
   useEffect(() => {
     const checkToken = async () => {
@@ -30,6 +32,26 @@ export default function AppProvider() {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (showStoreModal && storeUpdateInfo?.storeUrl) {
+      Alert.alert(
+        'Update Available',
+        'A new version of the app is available. Please update to continue.',
+        [
+          {
+            text: 'Update',
+            onPress: () => {
+              if (storeUpdateInfo?.storeUrl) {
+                Linking.openURL(storeUpdateInfo?.storeUrl);
+              }
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    }
+  }, [showStoreModal, dispatch, storeUpdateInfo?.storeUrl]);
 
   return (
     <View

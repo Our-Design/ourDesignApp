@@ -1,7 +1,16 @@
-import React, {useState} from 'react';
-import {TextInput, View} from 'react-native';
+import React, {useMemo, useState} from 'react';
+import {
+  StyleProp,
+  TextInput,
+  TextInputProps,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import styles from './styles';
 import Text from '../Text';
+import {Colors} from '../../styles/vars';
 
 interface Props {
   label?: string;
@@ -10,8 +19,8 @@ interface Props {
   onChangeText: (text: string) => void;
   inputType?: 'text' | 'email' | 'password' | 'phoneNumber' | 'numeric';
   required?: boolean;
-  style?: object;
-  containerStyle?: object;
+  style?: StyleProp<TextStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
   error?: string | null;
   onValidationChange?: (hasError: boolean) => void;
 }
@@ -29,6 +38,36 @@ const FormInput: React.FC<Props> = ({
   onValidationChange,
 }) => {
   const [internalError, setInternalError] = useState<string | null>(null);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const isPasswordInput = inputType === 'password';
+
+  const autoCompleteValue: TextInputProps['autoComplete'] = useMemo(() => {
+    switch (inputType) {
+      case 'email':
+        return 'email';
+      case 'phoneNumber':
+        return 'tel';
+      case 'password':
+        return 'password';
+      default:
+        return 'off';
+    }
+  }, [inputType]);
+
+  const textContentTypeValue: TextInputProps['textContentType'] =
+    useMemo(() => {
+      switch (inputType) {
+        case 'email':
+          return 'emailAddress';
+        case 'phoneNumber':
+          return 'telephoneNumber';
+        case 'password':
+          return 'password';
+        default:
+          return 'none';
+      }
+    }, [inputType]);
 
   // Use external error if provided, otherwise use internal error
   const displayError =
@@ -93,15 +132,41 @@ const FormInput: React.FC<Props> = ({
     <View style={[styles.container, containerStyle]}>
       {label && <Text style={styles.label}>{label}</Text>}
 
-      <TextInput
-        style={[styles.input, style, !!displayError && styles.errorInput]}
-        placeholder={placeholder}
-        value={value}
-        onChangeText={handleInputChange}
-        secureTextEntry={inputType === 'password'}
-        autoCapitalize="none"
-        keyboardType={keyboardType}
-      />
+      <View style={styles.inputWrapper}>
+        <TextInput
+          style={[
+            styles.input,
+            style,
+            !!displayError && styles.errorInput,
+            isPasswordInput && styles.passwordInput,
+          ]}
+          placeholder={placeholder}
+          placeholderTextColor={Colors.subText}
+          value={value}
+          onChangeText={handleInputChange}
+          secureTextEntry={isPasswordInput && !isPasswordVisible}
+          autoCapitalize="none"
+          autoCorrect={isPasswordInput ? false : undefined}
+          keyboardType={keyboardType}
+          textContentType={textContentTypeValue}
+          autoComplete={autoCompleteValue}
+          selectionColor={Colors.primary}
+        />
+
+        {isPasswordInput && (
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel={
+              isPasswordVisible ? 'Hide password' : 'Show password'
+            }
+            onPress={() => setIsPasswordVisible(prev => !prev)}
+            style={styles.passwordToggle}>
+            <Text style={styles.passwordToggleText}>
+              {isPasswordVisible ? 'Hide' : 'Show'}
+            </Text>
+          </TouchableOpacity>
+        )}
+      </View>
 
       {!!displayError && <Text style={styles.errorText}>{displayError}</Text>}
     </View>

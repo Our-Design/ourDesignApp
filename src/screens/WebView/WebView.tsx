@@ -10,7 +10,7 @@ import {WebView as RNWebView} from 'react-native-webview';
 import {WebViewSource} from 'react-native-webview/lib/WebViewTypes';
 import styles from './styles';
 import CustomStatusBar from '../../components/CustomStatusBar';
-import {Colors} from '../../styles/vars';
+import {Colors, Spacing} from '../../styles/vars';
 import Text from '../../components/Text';
 
 export interface SourceParams {
@@ -74,7 +74,10 @@ const WebViewScreen = ({route}: any) => {
 
   return (
     <View style={styles.container} testID="webViewScreen">
-      <CustomStatusBar backgroundColor={Colors.webViewBackground} />
+      <CustomStatusBar
+        backgroundColor={Colors.webViewBackground}
+        style={{height: Spacing.na}}
+      />
       <RNWebView
         source={webViewSource as WebViewSource}
         onError={handleWebViewError}

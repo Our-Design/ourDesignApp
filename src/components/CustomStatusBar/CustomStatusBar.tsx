@@ -6,9 +6,10 @@ import {Spacing} from '../../styles/vars';
 
 interface Props {
   backgroundColor: string;
+  style?: object;
 }
 
-const CustomStatusBar: React.FC<Props> = ({backgroundColor}) => {
+const CustomStatusBar: React.FC<Props> = ({backgroundColor, style}) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -16,6 +17,7 @@ const CustomStatusBar: React.FC<Props> = ({backgroundColor}) => {
       style={{
         height: Platform.OS === 'ios' ? insets.top : Spacing.na,
         backgroundColor,
+        ...style,
       }}>
       <StatusBar
         translucent
