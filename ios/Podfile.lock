@@ -1411,6 +1411,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-version-check (3.5.0):
+    - React-Core
   - react-native-webview (13.13.5):
     - DoubleConversion
     - glog
@@ -1805,6 +1807,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNDeviceInfo (14.1.1):
+    - React-Core
   - RNGestureHandler (2.25.0):
     - DoubleConversion
     - glog
@@ -2074,6 +2078,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-razorpay (from `../node_modules/react-native-razorpay`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-version-check (from `../node_modules/react-native-version-check`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-oscompat (from `../node_modules/react-native/ReactCommon/oscompat`)
@@ -2108,6 +2113,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -2201,6 +2207,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-razorpay"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-version-check:
+    :path: "../node_modules/react-native-version-check"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-NativeModulesApple:
@@ -2269,6 +2277,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -2322,6 +2332,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: cd8733e55d2bc53f5342d2c8e26c8c9bae82a999
   react-native-razorpay: 0272dd684bc9148828c54a72e05059e3e2e8b813
   react-native-safe-area-context: 55dbcf556a51092ddf163b29febbc07dc7f14ebb
+  react-native-version-check: 54a471d70dadf0f72fc142e70f16e4bf473a91a5
   react-native-webview: cde150463e7caa49b316b0ed1871e7ef8193bef4
   React-NativeModulesApple: b0bd6d12dc7b554676bdd1be5c4ddaa5ff125ae0
   React-oscompat: faff1df234d57a7368b56e9642222dde9eb9f422
@@ -2356,6 +2367,7 @@ SPEC CHECKSUMS:
   ReactCommon: c07346679f14c0b62ad02b20e18e984da3b575ce
   RNBootSplash: 2581883ab65c3f6fc7986bbe173a4c237d4e2637
   RNCAsyncStorage: c1bbcf629d7206d1e19310827848b98d68a4cbaf
+  RNDeviceInfo: 8b6fa8379062949dd79a009cf3d6b02a9c03ca59
   RNGestureHandler: 5d8431415d4b8518e86e289e9ad5bb9be78f6dba
   RNReanimated: 17308ae776a86e6be5d6fb1797722482569932fe
   RNScreens: c5c07a86e4088ce92f0d3854082250dfa9c61f75

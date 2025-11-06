@@ -76,13 +76,14 @@ const LeadDetails = () => {
 
       // 2. Razorpay Checkout options
       const options = {
-        description: 'Access this lead contact',
+        description: 'Payment to Our Design for lead access',
         image: '../../assets/images/ourLogo.png',
         currency: order.currency,
         key: RAZORPAY_KEY_ID,
         amount: order.amount, // in paisa
         order_id: order.orderId,
         name: 'Our Design',
+        company_name: 'Our Design',
         prefill: {
           name: user?.name,
           contact: user?.phone,
@@ -91,6 +92,7 @@ const LeadDetails = () => {
           leadId: lead._id,
           designerId: user?._id,
           source: 'mobile-app',
+          merchant_name: 'Our Design',
         },
         theme: {color: Colors.primary},
       };
