@@ -43,11 +43,15 @@ const ForgotPasswordScreen = () => {
   };
 
   return (
-    <ImageBackground source={Icons.background} style={styles.backgroundImage}>
-      {isAndroid && <CustomStatusBar backgroundColor={Colors.background} />}
-      <KeyboardAvoidingView
-        behavior={isIOS ? 'padding' : undefined}
-        style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={isIOS ? 'padding' : 'height'}
+      style={styles.container}
+      keyboardVerticalOffset={isIOS ? 0 : 20}>
+      <ImageBackground source={Icons.background} style={styles.backgroundImage}>
+        <CustomStatusBar
+          backgroundColor={Colors.transparent}
+          barStyle="dark-content"
+        />
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           showsVerticalScrollIndicator={false}
@@ -83,8 +87,8 @@ const ForgotPasswordScreen = () => {
             </View>
           </ShadowCard>
         </ScrollView>
-      </KeyboardAvoidingView>
-    </ImageBackground>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
 

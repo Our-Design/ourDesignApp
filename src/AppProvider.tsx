@@ -1,8 +1,9 @@
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {setToken, setUser} from './store/slices/authSlice';
+import {RootState} from './store';
 import AppNavigator from './navigation/AppNavigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {Alert, Linking, View} from 'react-native';
@@ -53,11 +54,12 @@ export default function AppProvider() {
     }
   }, [showStoreModal, dispatch, storeUpdateInfo?.storeUrl]);
 
+  const token = useSelector((state: RootState) => state.auth.token);
+
   return (
     <View
       style={{
-        paddingTop: isAndroid ? insets.top : Spacing.na,
-        flex: FontSize.x1,
+        flex: 1,
       }}>
       <NavigationContainer>
         <AppNavigator />

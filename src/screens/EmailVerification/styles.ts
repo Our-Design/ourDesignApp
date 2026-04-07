@@ -7,11 +7,10 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    resizeMode: 'center',
-    padding: Spacing.lg,
     justifyContent: 'center',
   },
   scrollContainer: {
+    padding: Spacing.lg,
     flexGrow: 1,
     justifyContent: 'center',
   },

@@ -8,17 +8,19 @@ import {
   setFilters,
   setSelectedLead,
 } from '../../store/slices/leadsSlice';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styles from './styles';
 import LeadCard from '../../components/LeadCard';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LeadSearchFilterBar from '../../components/LeadSearchFilteraBar';
 import CustomStatusBar from '../../components/CustomStatusBar';
-import {Colors} from '../../styles/vars';
+import {Colors, Spacing} from '../../styles/vars';
 import Text from '../../components/Text';
 import Icons from '../../constants/icons';
 
 const Home = () => {
+  const insets = useSafeAreaInsets();
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation<any>();
   const leads = useSelector(selectFilteredLeads);
@@ -43,7 +45,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <CustomStatusBar backgroundColor={Colors.headerBackground} />
-      <View style={styles.topContainer}>
+      <View style={[styles.topContainer, { paddingTop: insets.top + Spacing.lg }]}>
         {/* Greeting + Refresh */}
         <View style={styles.headerRow}>
           <Text style={styles.greeting}>Hi {user?.name || 'there'} 👋</Text>

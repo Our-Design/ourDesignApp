@@ -99,12 +99,11 @@ export default StyleSheet.create({
     marginVertical: Spacing.sm,
   },
   rangeInput: {
-    flex: 1,
+    height: 45,
   },
   containerStyle: {
-    flex: 1,
-    marginBottom: 0,
-    height: 40,
+    flex: 1, // Horizontal flex to share the row
+    marginBottom: Spacing.sm,
   },
   statusRow: {
     flexDirection: 'row',

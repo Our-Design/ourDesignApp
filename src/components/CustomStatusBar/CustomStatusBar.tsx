@@ -6,23 +6,28 @@ import {Spacing} from '../../styles/vars';
 
 interface Props {
   backgroundColor: string;
+  barStyle?: 'light-content' | 'dark-content' | 'default';
   style?: object;
 }
 
-const CustomStatusBar: React.FC<Props> = ({backgroundColor, style}) => {
+const CustomStatusBar: React.FC<Props> = ({
+  backgroundColor,
+  barStyle = 'dark-content',
+  style,
+}) => {
   const insets = useSafeAreaInsets();
 
   return (
     <View
       style={{
-        height: Platform.OS === 'ios' ? insets.top : Spacing.na,
-        backgroundColor,
+        height: Platform.OS === 'ios' ? insets.top : 0,
+        backgroundColor: Platform.OS === 'ios' ? backgroundColor : 'transparent',
         ...style,
       }}>
       <StatusBar
         translucent
         backgroundColor={backgroundColor}
-        barStyle="dark-content"
+        barStyle={barStyle}
         showHideTransition="fade"
       />
     </View>

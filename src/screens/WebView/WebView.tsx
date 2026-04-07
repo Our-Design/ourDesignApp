@@ -11,6 +11,7 @@ import {WebViewSource} from 'react-native-webview/lib/WebViewTypes';
 import styles from './styles';
 import CustomStatusBar from '../../components/CustomStatusBar';
 import {Colors, Spacing} from '../../styles/vars';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Text from '../../components/Text';
 
 export interface SourceParams {
@@ -64,19 +65,22 @@ const WebViewScreen = ({route}: any) => {
     return null;
   }, [source]);
 
+  const insets = useSafeAreaInsets();
+
   if (showError || !webViewSource) {
     return (
-      <View testID="webViewScreen">
+      <View testID="webViewScreen" style={{paddingTop: insets.top}}>
         <Text style={styles.errorText}>"Invalid Url</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container} testID="webViewScreen">
+    <View
+      style={[styles.container, {paddingTop: insets.top}]}
+      testID="webViewScreen">
       <CustomStatusBar
         backgroundColor={Colors.webViewBackground}
-        style={{height: Spacing.na}}
       />
       <RNWebView
         source={webViewSource as WebViewSource}
