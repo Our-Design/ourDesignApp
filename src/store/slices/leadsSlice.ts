@@ -30,6 +30,8 @@ export interface Lead {
   status: 'new' | 'sold';
   isVerified: boolean;
   assignedTo?: string | null;
+  buyers?: string[];
+  maxBuyers?: number;
   leadPrice: number;
 
   createdAt: string;
