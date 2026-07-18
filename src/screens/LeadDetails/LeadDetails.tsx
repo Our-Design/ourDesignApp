@@ -278,7 +278,7 @@ const LeadDetails = () => {
               disabled>
               <Text
                 style={[styles.accessButtonText, {color: Colors.background}]}>
-                Unavailable
+                Sold Out
               </Text>
             </Pressable>
           )}

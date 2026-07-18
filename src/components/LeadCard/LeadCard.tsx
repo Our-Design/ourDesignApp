@@ -55,8 +55,10 @@ const LeadCard: React.FC<Props> = ({lead, onPress}) => {
             {myLead
               ? 'View Details'
               : lead.status === 'sold'
-              ? 'Unavailable'
-              : lead.status}
+              ? 'Sold Out'
+              : lead.leadPrice != null
+              ? `Buy — ₹${lead.leadPrice}`
+              : 'Buy'}
           </Text>
         </Pressable>
       </View>
