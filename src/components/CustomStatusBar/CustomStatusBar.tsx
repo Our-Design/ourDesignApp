@@ -2,7 +2,6 @@
 import React from 'react';
 import {Platform, StatusBar, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Spacing} from '../../styles/vars';
 
 interface Props {
   backgroundColor: string;
@@ -21,7 +20,8 @@ const CustomStatusBar: React.FC<Props> = ({
     <View
       style={{
         height: Platform.OS === 'ios' ? insets.top : 0,
-        backgroundColor: Platform.OS === 'ios' ? backgroundColor : 'transparent',
+        backgroundColor:
+          Platform.OS === 'ios' ? backgroundColor : 'transparent',
         ...style,
       }}>
       <StatusBar

@@ -31,5 +31,22 @@ target 'ourDesign' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+    # Xcode 26+: Apple Clang rejects fmt 11.0.2 consteval format strings.
+    # Disable FMT_USE_CONSTEVAL so RN 0.79 builds successfully.
+    fmt_base = File.join(installer.sandbox.root, 'fmt', 'include', 'fmt', 'base.h')
+    if File.exist?(fmt_base)
+      content = File.read(fmt_base)
+      unless content.include?('Xcode 26 workaround')
+        patched = content.gsub(
+          /#elif defined\(__cpp_consteval\)\n#  define FMT_USE_CONSTEVAL 1/,
+          "// Xcode 26 workaround: disable consteval\n#elif defined(__cpp_consteval)\n#  define FMT_USE_CONSTEVAL 0"
+        )
+        if patched != content
+          File.chmod(0644, fmt_base)
+          File.write(fmt_base, patched)
+        end
+      end
+    end
   end
 end
