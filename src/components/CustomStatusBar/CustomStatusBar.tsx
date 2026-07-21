@@ -16,12 +16,17 @@ const CustomStatusBar: React.FC<Props> = ({
 }) => {
   const insets = useSafeAreaInsets();
 
+  // Android translucent StatusBar needs a top spacer; fall back to currentHeight.
+  const topInset =
+    Platform.OS === 'android'
+      ? insets.top || StatusBar.currentHeight || 0
+      : insets.top;
+
   return (
     <View
       style={{
-        height: Platform.OS === 'ios' ? insets.top : 0,
-        backgroundColor:
-          Platform.OS === 'ios' ? backgroundColor : 'transparent',
+        height: topInset,
+        backgroundColor,
         ...style,
       }}>
       <StatusBar
